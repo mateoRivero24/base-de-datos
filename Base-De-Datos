@@ -1,0 +1,39 @@
+DROP DATABASE if EXISTS compras;
+CREATE DATABASE compras;
+use compras;
+CREATE TABLE provincia(id_provincia int PRIMARY KEY AUTO_INCREMENT, nombre varchar(20), pais varchar(20));
+CREATE TABLE ciudad (id_ciudad int PRIMARY KEY AUTO_INCREMENT, nombre varchar(30), cantidad_habitantes int (10), codigopostal int(8), id_provincia int, FOREIGN KEY(id_provincia) REFERENCES provincia(id_provincia)); 
+create TABLE cliente(cliente_id int PRIMARY KEY AUTO_INCREMENT, nombre varchar(20), dni int(20), apellido varchar(20), telefono varchar(30), gmail varchar(30), id_ciudad int, FOREIGN KEY (id_ciudad) REFERENCES ciudad(id_ciudad));
+create TABLE productos(id_productos int PRIMARY KEY AUTO_INCREMENT, nombre varchar(30), precio decimal(20));
+create TABLE compras(pedido_id int PRIMARY KEY AUTO_INCREMENT, fecha varchar(20), cantidadproductos varchar (10), preciototal varchar(10)); 
+
+INSERT INTO provincia(id_provincia, nombre, pais) values (1,"rio negro","argentina");
+INSERT INTO provincia(id_provincia, nombre, pais) values (2,"sucre","bolivia");
+INSERT INTO provincia(id_provincia, nombre, pais) values (3,"venezuela","peru");
+INSERT INTO provincia(id_provincia, nombre, pais) values (4,"rastrinx","uruguay");
+INSERT INTO provincia(id_provincia, nombre, pais) values (5,"laster","colombia");
+
+INSERT INTO ciudades(id_ciudad, nombre, cantidad_habitantes, codigopostal, id_provincia) values (1,"kalturis",7310,4600, 4);
+INSERT INTO ciudades(id_ciudad, nombre, cantidad_habitantes, codigopostal, id_provincia) values (2,"prexin",41210,9100, 3);
+INSERT INTO ciudades(id_ciudad, nombre, cantidad_habitantes, codigopostal, id_provincia) values (3,"rofler",521210,1100, 1);
+INSERT INTO ciudades(id_ciudad, nombre, cantidad_habitantes, codigopostal, id_provincia) values (4,"clantis",901210,1240, 5);
+INSERT INTO ciudades(id_ciudad, nombre, cantidad_habitantes, codigopostal, id_provincia) values (5,"lantica",12610,700, 2);
+
+INSERT INTO cliente(id_cliente, nombre, apellido, dni, telefono, id_ciudad) values (1,"emilio", "garra", 1892322, +54 11 2001 8241, 2);
+INSERT INTO cliente(id_cliente, nombre, apellido, dni, telefono, id_ciudad) values (1,"tarsen", "flanks",4183221, +11 32 9124 8231, 5);
+INSERT INTO cliente(id_cliente, nombre, apellido, dni, telefono, id_ciudad) values (1,"emilio", "flanks", 7419801, +56 23 7533 2193, 1);
+INSERT INTO cliente(id_cliente, nombre, apellido, dni, telefono, id_ciudad) values (1,"emilio", "flanks", 2658185, +51 75 6183 9191, 3);
+INSERT INTO cliente(id_cliente, nombre, apellido, dni, telefono, id_ciudad) values (1,"emilio", "flanks", 1728155, +32 81 8151, 4);
+
+INSERT INTO productos(id_producto, nombre, precio ) values (1,"pepitos",8900);
+INSERT INTO productos(id_producto, nombre, precio ) values (2,"oreo",11000);
+INSERT INTO productos(id_producto, nombre, precio ) values (3,"gatorade",5600);
+INSERT INTO productos(id_producto, nombre, precio ) values (4,"doritos",1330);
+INSERT INTO productos(id_producto, nombre, precio ) values (5,"maple de huevos",5100);
+
+
+INSERT INTO compra(pedido_id, fecha, cantidadproductos, preciototal) values (1,20/07/2022, 4, 11000);
+INSERT INTO compra(pedido_id, fecha, cantidadproductos, preciototal) values (2,28/01/2010, 22, 58000);
+INSERT INTO compra(pedido_id, fecha, cantidadproductos, preciototal) values (3,03/03/2015, 11, 49000);
+INSERT INTO compra(pedido_id, fecha, cantidadproductos, preciototal) values (4,15/04/2014, 4, 12000);
+INSERT INTO compra(pedido_id, fecha, cantidadproductos, preciototal) values (5,09/11/2025, 20, 52020);
