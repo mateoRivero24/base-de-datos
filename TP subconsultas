@@ -12,7 +12,7 @@
 
 7) SELECT * from clientes where id not IN(SELECT cliente from compras)
 
-8) SELECT * from clientes GROUP by apellido desc limit 1
+8) SELECT * from clientes where apellido =(select apellido from clientes group by apellido desc limit 1)
 
 9)SELECT * FROM clientes where localidad IN(SELECT id from ciudades where id in(SELECT localidad from clientes where nombre = "juan" and apellido = "perez"))
 
