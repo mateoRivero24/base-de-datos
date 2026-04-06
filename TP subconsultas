@@ -1,0 +1,27 @@
+1) SELECT * from clientes WHERE localidad IN(SELECT id from ciudades where nombre = "Buenos aires")
+
+2) SELECT * FROM productos WHERE precio > (SELECT AVG(precio) from productos)
+
+3) SELECT * from clientes where id in(SELECT cliente from compras where producto=5)
+
+4) SELECT * FROM provincias WHERE poblacion > (SELECT AVG(poblacion) from provincias)
+
+5) SELECT * from productos where precio =(SELECT precio from productos where descripcion = "birome azul")
+
+6) SELECT * from ciudades where provincia=(SELECT id from provincias where nombre = "Buenos aires")
+
+7) SELECT * from clientes where id not IN(SELECT cliente from compras)
+
+8) SELECT * from clientes GROUP by apellido desc limit 1
+
+9)SELECT * FROM clientes where localidad IN(SELECT id from ciudades where id in(SELECT localidad from clientes where nombre = "juan" and apellido = "perez"))
+
+10) SELECT * FROM productos WHERE stock > (SELECT AVG(stock) from productos)
+
+11) SELECT * FROM ciudades WHERE poblacion > (SELECT poblacion from ciudades where nombre = "rosario")
+
+12) SELECT * from clientes where id IN(SELECT cliente from compras)
+
+13) SELECT * from productos where id not IN(SELECT producto from compras)
+
+14) SELECT * from provincias WHERE id IN(SELECT id from provincias where region = "pampa")
