@@ -1,0 +1,24 @@
+1 - CREATE VIEW cliente_oriundo AS SELECT Clientes.*, Ciudades.nombre AS ciudad_nombre FROM Clientes JOIN Ciudades ON Clientes.localidad = Ciudades.id
+
+2 - SELECT * FROM cliente_oriundo WHERE ciudad_nombre = "Santa Fe"
+
+3 - CREATE VIEW  ciudade_provincia AS SELECT Ciudades.* Provincias.nombre AS provincia_nombre FROM Ciudades JOIN Provincias ON Ciudades.provincia = Provincias.id
+
+4 - CREATE VIEW provincia_mas_1 AS SELECT Provincias.*, COUNT(Ciudades.id) AS cantidad_ciudades FROM Provincias JOIN Ciudades ON Provincias.id = Ciudades.provincia WHERE COUNT(Ciudades.localidad) > 1
+
+5 - CREATE VIEW producto_no_stock AS SELECT * FROM Productos WHERE stock = 0
+
+6 - SELECT
+(SELECT descripcion FROM producto_no_stock WHERE precio = (SELECT MAX(precio) FROM producto_no_stock)) AS descripcion_mas_caro,
+MAX(precio) AS precio,
+(SELECT descipcion FROM producto_no_stock WHERE precio = (SELECT MIN(precio) FROM producto_no_stock)) AS descripcion_mas_baratoo,
+MIN(precio) AS mas_barato
+FROM producto_no_stock
+
+7 - CREATE VIEW clientes_compra AS SELECT * FROM Clientes WHERE (SELECT COUNT(cliente) FROM Compras) = 1
+
+8 -
+
+9 -
+
+10 - CREATE VIEW productos_no_comprados AS SELECT * FROM Productos WHERE id NOT IN(SELECT producto FROM Compras)
