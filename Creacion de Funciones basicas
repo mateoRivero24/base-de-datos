@@ -1,0 +1,113 @@
+1-DELIMITER// 
+CREATE FUNCTION precio_con_iva(numero decimal);
+RETURNS decimal;  
+
+BEGIN
+RETURN numero * 1.21;
+END //
+DELIMITER ;
+
+2-DELIMITER //
+CREATE FUNCTION doble(numero int);
+RETURNS int;  
+BEGIN
+RETURN numero * 2;
+END //
+DELIMITER ;
+
+3-DELIMITER //
+CREATE FUNCTION nombre_completo(Nombre string, Apellido string);
+RETURNS string;  
+BEGIN
+RETURN Nombre, Apellido;
+END //
+DELIMITER ;
+
+4-DELIMITER //
+CREATE FUNCTION estado_stock(stock int);
+RETURNS int;  
+BEGIN
+IF stock = 0 THEN
+RETURN "Sin stock";
+ELSE
+IF stock < 20 THEN
+RETURN "Bajo";
+ELSE
+RETURN "disponible"; 
+END IF;
+END //
+DELIMITER ;
+
+5-DELIMITER //
+CREATE FUNCTION Calificar_precio(precio int);
+RETURNS int;  
+BEGIN
+IF stock < 100 THEN
+RETURN "Barato";
+ELSE
+IF stock between 100 AND 500  THEN
+RETURN "Medio";
+ELSE
+RETURN "Caro"; 
+END IF;
+END //
+DELIMITER ;
+
+
+6-DELIMITER //
+CREATE FUNCTION  aplicar_descuento(precio double, porcentaje double);
+RETURNS double;  
+BEGIN
+RETURN precio, porcentaje = precio - precio * porcentaje;
+END //
+DELIMITER ;
+
+7- DELIMITER //
+CREATE FUNCTION obtener_precio(id_producto int)
+RETURNS DECIMAL(10,2)
+BEGIN
+DECLARE precio_producto DECIMAL(10,2);
+SELECT precio;
+INTO precio_producto;
+FROM productos;
+WHERE id = id_producto;
+RETURN precio_producto;
+END //
+DELIMITER ;
+
+8- DELIMITER //
+CREATE FUNCTION obtener_stock(id_producto int)
+RETURNS id_producto;
+BEGIN
+DECLARE id_producto int;
+SELECT stock
+FROM producto
+WHERE id = id_producto;
+RETURN id_producto;
+END //
+DELIMITER ;
+
+9- DELIMITER //
+CREATE FUNCTION nombre_cliente(id_cliente int)
+RETURNS int
+BEGIN
+DECLARE precio_producto varchar(20);
+SELECT Nombre, Apellido;
+INTO cliente;
+FROM clientes;
+WHERE id = id_cliente;
+RETURN Nombre, Apellido;
+END //
+DELIMITER ;
+
+10- DELIMITER //
+CREATE FUNCTION marca_producto(id_producto) 
+RETURNS int
+BEGIN
+DECLARE marca_producto varchar (20);
+SELECT Marca;
+FROM Productos;
+WHERE id = id_producto ;
+RETURN marca_producto;
+END //
+DELIMITER ;
