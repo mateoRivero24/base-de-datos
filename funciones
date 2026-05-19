@@ -1,0 +1,128 @@
+1 - cantidad total comprada
+DELIMITER //
+Function cantidad_total_comprada(id_producto int)
+RETURNS int
+BEGIN
+declare menta int;
+SELECT sum(cant)
+INTO menta;
+FROM compras;
+WHERE id_producto = producto
+RETURN 
+END //
+DELIMITER ;
+
+2-
+DELIMITER //
+Function cantidad_total_comprada(id_cliente int)
+RETURNS int
+BEGIN
+
+SELECT sum(cant)
+
+FROM compras;
+WHERE id_cliente = cliente
+RETURN 
+END //
+DELIMITER ;
+
+3-
+DELIMITER //
+Function ultima_compra(id_cliente)
+RETURNS date
+
+BEGIN
+declare ultdi date;
+SELECT fecha into ultdi from compras where cliente = id_cliente order by fecha desc limit 1;
+RETURN ultidi
+END //
+DELIMITER ;
+
+4- 
+DELIMITER //
+Function (id_cliente)
+RETURNS date
+BEGIN
+declare u date;
+SELECT fecha into u from compras where cliente = id_cliente order by fecha limit 1; 
+
+FROM compras;
+WHERE id_producto = producto
+RETURN datediff(u,now())
+END //
+DELIMITER ;
+
+5-
+DELIMITER //
+Function total_gastao(id_cliente)
+RETURNS decimal (10,2)
+BEGIN
+declare u decimal(10,2) ;
+SELECT sum(precio) from compras c join productos p on c.producto = p.id where id_cliente = cliente; 
+
+RETURN u
+END //
+DELIMITER ;
+
+6-
+DELIMITER //
+Function cliente-premium(id_cliente)
+returns decimal(10,2)
+BEGIN
+declare u decimal(10,2) ;
+SELECT sum(precio) into u from compras c join productos p on c.producto = p.id where id_cliente = cliente; 
+
+if u < 5000
+RETURN "Usuario normal";
+else
+return "usuario premium"
+END //
+DELIMITER ;
+
+7- DELIMITER //
+Function provincia_cliente(id_cliente)
+RETURNS varchar(20)
+BEGIN
+declare u varchar;
+SELECT provincia into u from clientes c join ciudad cc on c.id =cc.id join provincia on cc.id = id.provincia  
+
+RETURN u
+END //
+DELIMITER ;
+
+8-
+ DELIMITER //
+Function reion_cliente(id_cliente)
+RETURNS varchar(20)
+BEGIN
+declare u varchar;
+select  nombre.provincia into u from cliente c join ciudad cc on c.id =cc.id join provincia on cc.id = id.provincia  
+return n
+END //
+DELIMITER ;
+9-
+ DELIMITER //
+Function cliente_por_provincia(id_provincia)
+RETURNS varchar(20)
+BEGIN
+declare u varchar;
+select clientes, provincia.nombre into u from provincia join ciudad cc on provincia.id =cc.id join provincia on cc.id = id.cliente   
+return n
+END //
+DELIMITER ;
+
+
+10-
+ DELIMITER //
+Function producto_mas_vendido()
+RETURNS varchar(20)
+BEGIN
+declare u varchar;
+SELECT max() into u from compras where compras =  order by fecha limit 1; 
+return n
+END //
+DELIMITER ;
+
+
+
+
