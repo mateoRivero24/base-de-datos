@@ -112,17 +112,69 @@ END //
 DELIMITER ;
 
 
-10-
+10- no ter
  DELIMITER //
 Function producto_mas_vendido()
 RETURNS varchar(20)
 BEGIN
-declare u varchar;
-SELECT max() into u from compras where compras =  order by fecha limit 1; 
+declare u varchar(22);
+SELECT descripcion into u from compras      where compras =     order by  limit 1; 
 return n
 END //
 DELIMITER ;
 
+11- no ter
+DELIMITER //
+Function producto_menos_vendido()
+RETURNS varchar(20)
+BEGIN
+declare l varchar;
+SELECT descripcion into u from compras  where compras =    order by  limit 1; 
 
 
+12
+DELIMITER //
+RETURNS Decimal(10,2)
+Function promedio_precio()
+BEGIN
+DECLARE prome Decimal(10,2)
+Select AVG(Precios) into prome From Productos;
+RETURN prome 
+END //
+DELIMITER;
 
+13
+
+DELIMITER //
+
+Function promedio_precio()
+BEGIN
+DECLARE prome Decimal(10,2)
+Select AVG(Precios) into prome From Productos;
+if  precios  > prome
+Return 'Por encima del promedio'
+else
+Return 'Por debajo del promedio'
+END //
+DELIMITER;
+
+14-
+
+DELIMITER //
+
+Function promedio_precio()
+BEGIN
+DECLARE stocc Decimal(10,2)
+
+if  Stock  = 0 
+Return 'Reponer stock ahora'
+else
+if stock < 20 
+Return 'Reponer stock'
+else
+Return 'ok'
+END //
+DELIMITER;
+
+
+15
