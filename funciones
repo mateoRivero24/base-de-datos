@@ -1,40 +1,35 @@
 1 - cantidad total comprada
 DELIMITER //
 Function cantidad_total_comprada(id_producto int)
-RETURNS int
+RETURNS INT
 BEGIN
-declare menta int;
-SELECT sum(cant)
-INTO menta;
-FROM compras;
-WHERE id_producto = producto
-RETURN 
+declare menta INT;
+SELECT sum(cant) INTO menta FROM compras WHERE id_producto = producto;
+RETURN menta;
 END //
 DELIMITER ;
 
 2-
 DELIMITER //
-Function cantidad_total_comprada(id_cliente int)
-RETURNS int
+CREATE FUNCTION cantidad_compras_cliente(id_cliente INT)
+RETURNS INT
+DETERMINISTIC
 BEGIN
-
-SELECT sum(cant)
-
-FROM compras;
-WHERE id_cliente = cliente
-RETURN 
+DECLARE total_compras INT;
+SELECT COUNT(*) INTO total_compras FROM compras WHERE cliente = id_cliente;
+RETURN total_compras;
 END //
 DELIMITER ;
 
 3-
 DELIMITER //
-Function ultima_compra(id_cliente)
-RETURNS date
-
+CREATE FUNCTION ultima_compra(id_cliente INT)
+RETURNS DATETIME
+DETERMINISTIC
 BEGIN
-declare ultdi date;
-SELECT fecha into ultdi from compras where cliente = id_cliente order by fecha desc limit 1;
-RETURN ultidi
+DECLARE ultdi DATETIME;
+SELECT MAX(fecha) INTO ultdi FROM compras WHERE cliente = id_cliente;
+RETURN ultdi;
 END //
 DELIMITER ;
 
@@ -66,115 +61,142 @@ DELIMITER ;
 
 6-
 DELIMITER //
-Function cliente-premium(id_cliente)
-returns decimal(10,2)
+CREATE FUNCTION cliente_premium(id_cliente INT)
+RETURNS VARCHAR(15)
+DETERMINISTIC
 BEGIN
-declare u decimal(10,2) ;
-SELECT sum(precio) into u from compras c join productos p on c.producto = p.id where id_cliente = cliente; 
-
-if u < 5000
-RETURN "Usuario normal";
-else
-return "usuario premium"
+DECLARE gastado DECIMAL(10,2);
+SET gastado = total_gastado(id_cliente); -- Reutilizamos la función anterior
+IF gastado > 5000 THEN
+RETURN 'Premium';
+ELSE
+RETURN 'Normal';
+END IF;
 END //
 DELIMITER ;
 
-7- DELIMITER //
-Function provincia_cliente(id_cliente)
-RETURNS varchar(20)
+7- 
+DELIMITER //
+CREATE FUNCTION provincia_cliente(id_cliente INT)
+RETURNS VARCHAR(60)
+DETERMINISTIC
 BEGIN
-declare u varchar;
-SELECT provincia into u from clientes c join ciudad cc on c.id =cc.id join provincia on cc.id = id.provincia  
-
-RETURN u
+DECLARE nombre_provincia VARCHAR(60);
+SELECT p.nombre INTO nombre_provincia FROM clientes c JOIN ciudades cd ON c.localidad = cd.id JOIN provincias p ON cd.provincia = p.id WHERE c.id = id_cliente;
+RETURN nombre_provincia;
 END //
 DELIMITER ;
 
 8-
- DELIMITER //
-Function reion_cliente(id_cliente)
-RETURNS varchar(20)
-BEGIN
-declare u varchar;
-select  nombre.provincia into u from cliente c join ciudad cc on c.id =cc.id join provincia on cc.id = id.provincia  
-return n
-END //
-DELIMITER ;
-9-
- DELIMITER //
-Function cliente_por_provincia(id_provincia)
-RETURNS varchar(20)
-BEGIN
-declare u varchar;
-select clientes, provincia.nombre into u from provincia join ciudad cc on provincia.id =cc.id join provincia on cc.id = id.cliente   
-return n
-END //
-DELIMITER ;
-
-
-10- no ter
- DELIMITER //
-Function producto_mas_vendido()
-RETURNS varchar(20)
-BEGIN
-declare u varchar(22);
-SELECT descripcion into u from compras      where compras =     order by  limit 1; 
-return n
-END //
-DELIMITER ;
-
-11- no ter
 DELIMITER //
-Function producto_menos_vendido()
-RETURNS varchar(20)
+CREATE FUNCTION region_cliente(id_cliente INT)
+RETURNS VARCHAR(20)
+DETERMINISTIC
 BEGIN
-declare l varchar;
-SELECT descripcion into u from compras  where compras =    order by  limit 1; 
+DECLARE nom_region VARCHAR(20);
+SELECT p.region INTO nom_region FROM clientes c JOIN ciudades cd ON c.localidad = cd.id JOIN provincias p ON cd.provincia = p.id WHERE c.id = id_cliente;
+RETURN nom_region;
+END //
+DELIMITER ;
+
+9-
+DELIMITER //
+CREATE FUNCTION clientes_por_provincia(id_provincia INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+DECLARE total_clientes INT DEFAULT 0;
+SELECT COUNT(c.id) INTO total_clientes FROM clientes c JOIN ciudades cd ON c.localidad = cd.id WHERE cd.provincia = id_provincia;
+RETURN total_clientes;
+END //
+DELIMITER ;
+
+
+10-
+DELIMITER //
+CREATE FUNCTION producto_mas_vendido()
+RETURNS VARCHAR(60)
+DETERMINISTIC
+BEGIN
+DECLARE prod_nombre VARCHAR(60);
+SELECT p.descripcion INTO prod_nombre FROM compras c JOIN productos p ON c.producto = p.id GROUP BY c.producto, p.descripcion ORDER BY SUM(c.cant) DESC LIMIT 1;
+RETURN prod_nombre;
+END //
+DELIMITER ;
+
+11- 
+DELIMITER //
+CREATE FUNCTION producto_menos_vendido()
+RETURNS VARCHAR(60)
+DETERMINISTIC
+BEGIN
+DECLARE prod_nombre VARCHAR(60);
+SELECT p.descripcion INTO prod_nombre FROM compras c JOIN productos p ON c.producto = p.id GROUP BY c.producto, p.descripcion ORDER BY SUM(c.cant) ASC LIMIT 1;
+RETURN prod_nombre;
+END //
+DELIMITER ;
 
 
 12
 DELIMITER //
-RETURNS Decimal(10,2)
-Function promedio_precio()
+CREATE FUNCTION promedio_precios()
+RETURNS DECIMAL(7,2)
+DETERMINISTIC
 BEGIN
-DECLARE prome Decimal(10,2)
-Select AVG(Precios) into prome From Productos;
-RETURN prome 
+DECLARE prome DECIMAL(7,2);
+SELECT AVG(precio) INTO prome FROM productos;
+RETURN prome;
 END //
-DELIMITER;
+DELIMITER ;
 
 13
 
 DELIMITER //
-
-Function promedio_precio()
+CREATE FUNCTION comparar_promedio(id_producto INT)
+RETURNS VARCHAR(30)
+DETERMINISTIC
 BEGIN
-DECLARE prome Decimal(10,2)
-Select AVG(Precios) into prome From Productos;
-if  precios  > prome
-Return 'Por encima del promedio'
-else
-Return 'Por debajo del promedio'
+DECLARE prome DECIMAL(7,2);
+DECLARE precio_prod DECIMAL(7,2);
+SET prome = promedio_precios();
+SELECT precio INTO precio_prod FROM productos WHERE id = id_producto;
+IF precio_prod > prome     
+RETURN 'Arriba del promedio';
+ELSE
+RETURN 'Debajo del promedio';
+END IF;
 END //
-DELIMITER;
+DELIMITER ;
 
 14-
 
 DELIMITER //
-
-Function promedio_precio()
+CREATE FUNCTION alerta_stock(id_producto INT)
+RETURNS VARCHAR(25)
+DETERMINISTIC
 BEGIN
-DECLARE stocc Decimal(10,2)
-
-if  Stock  = 0 
-Return 'Reponer stock ahora'
-else
-if stock < 20 
-Return 'Reponer stock'
-else
-Return 'ok'
+    DECLARE stocc INT;
+    SELECT stock INTO stocc FROM productos WHERE id = id_producto;
+      IF stocc = 0 THEN
+        RETURN 'REPOSICION URGENTE';
+    ELSE IF stocc < 20 THEN
+        RETURN 'STOCK BAJO';
+    ELSE
+        RETURN 'OK';
+    END IF;
 END //
-DELIMITER;
+DELIMITER ;
 
 
 15
+
+DELIMITER //
+CREATE FUNCTION cantidad_productos_cliente(id_cliente INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE suma_productos INT;
+    SELECT SUM(cant) INTO suma_productos FROM compras WHERE cliente = id_cliente;
+    RETURN IFNULL(suma_productos, 0);
+END //
+DELIMITER ;
