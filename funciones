@@ -1,4 +1,4 @@
-1 - cantidad total comprada
+1 - 
 DELIMITER //
 Function cantidad_total_comprada(id_producto int)
 RETURNS INT
@@ -54,7 +54,6 @@ RETURNS decimal (10,2)
 BEGIN
 declare u decimal(10,2) ;
 SELECT sum(precio) from compras c join productos p on c.producto = p.id where id_cliente = cliente; 
-
 RETURN u
 END //
 DELIMITER ;
@@ -137,7 +136,7 @@ END //
 DELIMITER ;
 
 
-12
+12-
 DELIMITER //
 CREATE FUNCTION promedio_precios()
 RETURNS DECIMAL(7,2)
@@ -149,8 +148,7 @@ RETURN prome;
 END //
 DELIMITER ;
 
-13
-
+13-
 DELIMITER //
 CREATE FUNCTION comparar_promedio(id_producto INT)
 RETURNS VARCHAR(30)
@@ -169,7 +167,6 @@ END //
 DELIMITER ;
 
 14-
-
 DELIMITER //
 CREATE FUNCTION alerta_stock(id_producto INT)
 RETURNS VARCHAR(25)
@@ -188,8 +185,7 @@ END //
 DELIMITER ;
 
 
-15
-
+15-
 DELIMITER //
 CREATE FUNCTION cantidad_productos_cliente(id_cliente INT)
 RETURNS INT
