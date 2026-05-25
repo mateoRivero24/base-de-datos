@@ -175,15 +175,15 @@ CREATE FUNCTION alerta_stock(id_producto INT)
 RETURNS VARCHAR(25)
 DETERMINISTIC
 BEGIN
-    DECLARE stocc INT;
-    SELECT stock INTO stocc FROM productos WHERE id = id_producto;
-      IF stocc = 0 THEN
-        RETURN 'REPOSICION URGENTE';
-    ELSE IF stocc < 20 THEN
-        RETURN 'STOCK BAJO';
-    ELSE
-        RETURN 'OK';
-    END IF;
+DECLARE stocc INT;
+SELECT stock INTO stocc FROM productos WHERE id = id_producto;
+IF stocc = 0 THEN
+RETURN 'REPOSICION URGENTE';
+ELSE IF stocc < 20 THEN
+RETURN 'STOCK BAJO';
+ELSE
+RETURN 'OK';
+END IF;
 END //
 DELIMITER ;
 
@@ -195,8 +195,8 @@ CREATE FUNCTION cantidad_productos_cliente(id_cliente INT)
 RETURNS INT
 DETERMINISTIC
 BEGIN
-    DECLARE suma_productos INT;
-    SELECT SUM(cant) INTO suma_productos FROM compras WHERE cliente = id_cliente;
-    RETURN IFNULL(suma_productos, 0);
+DECLARE suma_productos INT;
+SELECT SUM(cant) INTO suma_productos FROM compras WHERE cliente = id_cliente;
+RETURN IFNULL(suma_productos, 0);
 END //
 DELIMITER ;
