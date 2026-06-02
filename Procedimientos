@@ -1,0 +1,124 @@
+1 - Agregar una provincia
+
+Create Procedure l AS 
+@provincia int
+@nombre varchar
+@capital varchar
+@gobernador varchar
+@poblacion int
+@superficie 
+@autonoma DATE
+Begin
+insert into provincias(provincia,nombre,capital,gobernador,poblacion,superficie,autonoma) values (@provincia,@nombre,@capital,@gobernador,@poblacion,@superficie,@autonoma);
+
+END;
+Exec l  25, "paraguay", "asuncion","jose perez de peru", 100, 173000, 02/06/2026;
+
+2- Agregar una ciudad
+
+Create Procedure o as 
+@provincia int
+@nombre varchar
+@poblacion int
+@superficie int
+@fundacion DATE
+@Intendente varchar
+@altitud int
+Begin
+insert into ciudades(nombre,provincia,poblacion,superficie,fundacion,intendente, altitud) values (@nombre,@provincia,@poblacion,@superficie,@fundacion,@Intendente,@altitud)
+END 
+Exec o "Caco",5,10000,25000,02/06/2026,"portal maligno paco", 500;  
+
+3- Agregar un cliente
+
+@Create Procedure k as
+@nombre VARCHAR
+@apellido VARCHAR
+@tel VARCHAR
+@calle VARCHAR
+@altura INT
+@localidad INT
+@idcliente int
+@localidad int
+begin
+INSERT INTO clientes(nombre,apellido,tel,calle,altura,localidad) VALUES (@nombre,@apellido,@tel,@calle,@altura,@localidad);
+
+end
+exec k "manolito","flores",+55 911 2556 8104, lalxsin, 2110, bolivia;
+
+
+4- Agregar producto 
+
+Create Procedure j as
+@descripcion varchar
+@marca varchar
+@precio decimal(10,2)
+@stock int 
+begin
+Insert Into producto(descripcion,marca,precio,stock) values (@descripcion,@marca,@precio,@stock);
+END
+
+exec j "polio", "hashbro", 22.5, 5;
+
+5- Actualizar el precio de un producto
+Create Procedure g as
+@descripcion varchar
+@marca varchar
+@precio decimal(10,2)
+@stock int 
+begin
+Update producto(descripcion,marca,precio,stock) values (@descripcion,@marca,@precio,@stock);
+set precio = 222
+where descripcion = "polio"
+END
+
+exec g;
+
+6- Actualizar el stock de un producto
+Create Procedure i as
+@descripcion varchar
+@marca varchar
+@precio decimal(10,2)
+@stock int 
+begin
+Update producto(descripcion,marca,precio,stock) values (@descripcion,@marca,@precio,@stock);
+set stock = 99
+where descripcion = "polio"
+END
+
+exec i;
+
+7- Eliminar un cliente
+
+Create Procedure a as
+@nombre varchar
+begin
+delete * from cliente where nombre = @nombre ;
+
+END
+
+Exec a thiago;
+
+8- Mostrar todos los productos 
+Create Procedure c as
+begin
+select * from productos;
+END
+
+Exec c ;
+
+9- Buscar una ciudad por nombre
+create procedure s as
+@nombre
+begin
+select * from ciudad where nombre = @nombre;
+end
+exec s;
+
+10- Mostrar las ciudades de una provincia
+create procedure r as
+@nombre
+begin
+select * from ciudad where provincia = (select id from provincia where nombre = @nombre); 
+end
+exec r;
