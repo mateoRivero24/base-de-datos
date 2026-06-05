@@ -1,0 +1,19 @@
+1- 
+
+Create procedure elimcli as
+
+begin 
+Delete * from clientes where in not in(select cliente from(compras);
+end;
+
+2-
+Create procedure region as
+@provincias varchar;
+begin
+select * from provincias where region = @region 
+END;
+
+3-
+create procedure camgob as
+@gob varchar;
+
