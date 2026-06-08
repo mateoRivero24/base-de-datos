@@ -13,7 +13,123 @@ begin
 select * from provincias where region = @region 
 END;
 
-3-
+3- t
 create procedure camgob as
 @gob varchar;
+begin
+select
+end;
+
+4-
+Create procedure producto as
+@id int,
+@desc varchar;
+@precio decimal(10,2);
+@stock int;
+begin
+if precio > 0
+insert into producto (id,desc,precio,stock) values (@id,@desc,@precio,@stock);
+end;
+
+5-
+create procedure fecha ass
+@fecha Date;
+@fechaa Date;
+begin
+select * from compras between(@fecha,@fechaa);
+end;
+
+6-
+Create procedure borrar as 
+@poblacion int;
+begin
+
+Delete * from ciudad where poblacion < @poblacion;
+END;
+
+7- 
+Create procedure aumen as
+@marca varchar;
+begin
+update productos
+set stock = stock + 1 where if marca == @marca
+end;
+
+8
+Create procedure mostrar as
+@marca
+select * from productos where marca == @marca;
+end;
+
+9-
+
+create procedure stock 
+begin
+delete * from productos where stock < 1;
+end;
+
+10- 
+
+create procedure compra_fecha as
+@cliente varchar;
+@producto int;
+@cantidad int;
+begin
+insert into compras(fecha,cliente,producto,cant) values (now,@cliente,@producto,@cantidad);
+end;
+
+11-
+create procedure caro as
+
+begin
+select * from productos where precio = max(precio);
+END;
+
+12-
+
+create procedure stock as 
+@id
+
+update producto
+set stock = stock -1 where id = @id;
+end;
+
+13-
+
+Create procedure pp as
+
+begin
+delete provincias where id not in (ciudades);
+end;
+
+14-
+
+create procedure cliente as
+@id
+begin
+select @ from compras where id_cliente = @id;
+end;
+
+15-
+
+create procedure provincia as
+@idprovincia int;
+@nombre varchar;
+@poblacion int;
+@superficie decimal(10,2);
+begin
+insert into provincias (idprovincia,nombre,poblacion,superficie) values (@idprovincia,@nombre,@poblacion,@superficie);
+END;
+
+16-
+
+create procedure marca as
+@marca varchar;
+
+begin
+delete * from productos where marca == @marca;
+end;
+
+17-
+
 
