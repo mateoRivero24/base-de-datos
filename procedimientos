@@ -13,7 +13,7 @@ begin
 select * from provincias where region = @region 
 END;
 
-3- t
+3- 
 create procedure camgob as
 @gob varchar;
 @id int;
