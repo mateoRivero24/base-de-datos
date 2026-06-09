@@ -16,8 +16,10 @@ END;
 3- t
 create procedure camgob as
 @gob varchar;
+@id int;
 begin
-select
+update provincias
+set gobernador = @gob where id = @id;
 end;
 
 4-
