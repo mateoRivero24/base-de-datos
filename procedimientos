@@ -132,4 +132,76 @@ end;
 
 17-
 
+create procedure precio as 
+@id int;
+@precio decimal(10,2);
+begin
+update precio
+set precio = @precio where id = @id;
+END;
+
+18-
+
+Create procedure fecha as
+@fecha DATE;
+begin
+delete * from compra where fecha  < @fecha;
+END;
+
+19-
+create procedure stock as 
+@stock  int;
+begin
+delete * from productos where stock < @stock;
+END;
+
+
+20-  t
+Create procedure agregar_stock as 
+@id int;
+@stock int;
+@descripcion varchar;
+@precio
+begin
+insert into produtos (id,stock,descripcion,precio) values (@id,@stock,@descripcion,@precio);
+end;
+
+
+21-
+
+create procedure elimfe as
+@fecha DATE;
+begin
+delete * from compras where fecha < @fecha;
+END;
+
+22-
+
+create procedure sinstock as 
+@id
+begin
+update productos
+set stock = 0 where id = @id;
+END;
+
+23-
+create procedure compra_reg as
+@cliente varchar;
+@producto int;
+@cantidad int;
+@fecha DATE;
+begin
+insert into compras(fecha,cliente,producto,cant) values (@fecha,@cliente,@producto,@cantidad);
+end;
+
+24-
+
+create procedure aument as 
+@aumento decimal(10,2);
+@marca varchar;
+begin
+update (productos)
+set precios = precios * aumento where marca = @marca;
+END;
+
 
