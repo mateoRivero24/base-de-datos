@@ -13,3 +13,106 @@ select sum(cantidad * p.precio) from compras join p.producto where id = p.id;
 end;
 
 3-
+create procedure ver as
+@id int,
+@cliente int;
+@cant int;
+@producto int;
+begin
+
+if @cliente in(select id from cliente ) and @cant < (select stock from productos where id=@producto) 'insert into compras (id,cliente,cant,producto, fecha) values (@id,@cliente,@cant,@producto, now());
+
+','"no se puede hacer"';
+end;
+
+4-
+create procedure total as
+@id int
+begin
+
+select sum(c.cant * p.precio) as total, cl.nombre from clientes cl join compras c on cl.id=c.cliente join productos p on c.producto=p.id WHERE cl.id = @id
+end;
+
+5-
+create procedure region as
+begin
+select region from clientes join provincia p on c.id = p.id;
+end;
+
+6-
+create procedure rentable as
+
+begin
+if producto < 6 'Es rentable','No es rentable';
+END;
+
+7-
+Create procedure region as
+@region varchar;
+Begin
+select sum(poblacion) as total region from provincias where region=@region;
+END;
+
+8-
+create procedure verif as
+@cliente int;
+
+begin
+if @cliente in(select id from cliente ) 'Existe','No exise'; 
+END;
+
+9-
+create procedure total as
+
+begin
+select sum(c.cant * p.precio) as total, cl.nombre from clientes cl join compras c on cl.id=c.cliente join productos p on c.producto=p.id
+END;
+
+10-
+create procedure rcp as
+@id int
+select *,provincia,region from clientecl join provincia p on cl.id = p.id where cl.id=@id;
+END;
+
+11-
+create procedure stock as 
+@producto int;
+begin
+select sum(stock * precio) as total from productos;
+END;
+
+12-
+create procedure cierta as
+@poblacion int;
+begin
+if @poblacion > poblacion in (select poblacion from ciudades) 'Supera','No supera';
+end;
+
+13-
+create procedure cantidad as
+
+begin
+select sum(c.cant) as total, cl.nombre from clientes cl join compras c on cl.id=c.cliente
+end;
+
+14-
+create procedure check as
+@stock int;
+if (select stock from productos)<@stock 'Necesita','No necesita'; 
+END;
+
+15-
+create procedure ll as
+@marca
+begin
+select sum(precio * stock) from productos where marca = @marca;
+end;
+
+16-
+create procedure rr as
+@stock int;
+if (select stock from productos)<@stock 'Se pasa del parametro','No se pasa del parametro'; 
+END;
+
+17-
+
