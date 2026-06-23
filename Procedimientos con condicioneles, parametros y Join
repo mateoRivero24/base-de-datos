@@ -140,9 +140,39 @@ select *, provincia from clientes join provincia p on c.id = p.id;
 end;
 
 21-
-create procedure 
+create procedure nose as
 begin
 no se
 END;
 
 22-
+create procedure top3 as
+begin
+select marca, max(sum(p.precio * c.cantidad)) from  productos p join compras c on p.id = c.id order by desc limit 3;
+end;
+
+23-
+create procedure nose as
+begin
+no se
+END;
+
+24-
+create procedure inflacion as
+@marca varchar;
+begin
+if poblacion in (select poblacion from ciudades)> 1000000 'select precio * 1.15 from productos where marca =@marca;','No supera';
+end;
+
+25-
+create procedure mayormes as
+begin
+no se
+end;
+
+26-
+
+
+
+
+
