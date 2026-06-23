@@ -103,7 +103,7 @@ END;
 
 15-
 create procedure ll as
-@marca
+@marca varchar;
 begin
 select sum(precio * stock) from productos where marca = @marca;
 end;
@@ -115,4 +115,20 @@ if (select stock from productos)<@stock 'Se pasa del parametro','No se pasa del 
 END;
 
 17-
+create procedure provin_inten as
 
+begin
+select p.nombre, c.intendente from ciudades c join provincias p on c.id=p.id;
+END;
+
+18-
+create procedure iva as
+@producto int;
+begin
+select precio * 1.21 from productos where id=@producto; 
+END;
+
+19-
+create procedure max_com as
+begin
+select max() as maxcomp from 
