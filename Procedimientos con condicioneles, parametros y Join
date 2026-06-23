@@ -131,4 +131,18 @@ END;
 19-
 create procedure max_com as
 begin
-select max() as maxcomp from 
+select max(sum(p.precio * c.cantidad)) as max from producto p join compras c on p.id = c.id;
+END;
+20-
+create procedure provincia as
+begin
+select *, provincia from clientes join provincia p on c.id = p.id;
+end;
+
+21-
+create procedure 
+begin
+no se
+END;
+
+22-
