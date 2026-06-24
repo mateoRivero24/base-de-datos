@@ -148,7 +148,7 @@ END;
 22-
 create procedure top3 as
 begin
-select marca, max(sum(p.precio * c.cantidad)) from  productos p join compras c on p.id = c.id order by desc limit 3;
+select marca, max(sum(p.precio * c.cantidad)) from  productos p join compras c on p.id = c.id join clientes cl on c.id=cl.id join ciudades ci on cl.id = ci.id join provincias pro on ci.id = pro.id;
 end;
 
 23-
@@ -161,7 +161,8 @@ END;
 create procedure inflacion as
 @marca varchar;
 begin
-if poblacion in (select poblacion from ciudades)> 1000000 'select precio * 1.15 from productos where marca =@marca;','No supera';
+update (productos)
+set precio = (precio * 1.15) where marca = @marca and(select poblacion from provincia pr join ciudades ciu on pr.id=ciu.id join cliente cl on ciu.id=cl.id join producto pr on cl.id = pr.id join compras c on pr.id=c.id where marca = @marca)  ) and poblacion > 1000000; 
 end;
 
 25-
