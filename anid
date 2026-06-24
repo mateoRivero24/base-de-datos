@@ -1,0 +1,15 @@
+1-
+Delimiter//
+create function Region_cliente(cliente)
+DETERMINISTIC
+begin
+
+create function provincia_cliente(cliente)
+returns int;
+
+declare nompro varchar(60);
+
+select p.nombre INTO nompro from clientes cl join ciudades c on cl.id=c.id join provincia p on c.id=p.id where p.id=cl.id;
+returns nompro;
+END;
+Delimiter;
