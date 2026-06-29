@@ -1,11 +1,16 @@
 1-
 Delimiter//
 create function Region_cliente(cliente)
+returns varchar(60);
 DETERMINISTIC
 begin
+declare nomreg varchar(60);
+
+select p.region INTO nompro from clientes cl join ciudades c on cl.id=c.id join provincia p on c.id=p.id where p.id=cl.id;
+returns nompro;
 
 create function provincia_cliente(cliente)
-returns int;
+returns varchar (60);
 
 declare nompro varchar(60);
 
@@ -13,3 +18,23 @@ select p.nombre INTO nompro from clientes cl join ciudades c on cl.id=c.id join 
 returns nompro;
 END;
 Delimiter;
+
+
+2- t
+
+create procedure nivel as 
+@idcl int;
+
+select * from productos p join compras c on p.id = c.id join clientes cl on c.id = cl.id
+
+
+
+3-
+
+create function perez(id_cliente)
+returns
+declare nombre varchar(60);
+declare apellido varchar(60);
+declare nivel varchar(60);
+declare precio decimal(10,2);
+
