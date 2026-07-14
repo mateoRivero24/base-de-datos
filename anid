@@ -12,8 +12,9 @@ returns nompro;
 create function provincia_cliente(cliente)
 returns varchar (60);
 
-declare nompro varchar(60);
 
+declare nompr varchar(60);
+set nompro = nompr;
 select p.nombre INTO nompro from clientes cl join ciudades c on cl.id=c.id join provincia p on c.id=p.id where p.id=cl.id;
 returns nompro;
 END;
@@ -30,6 +31,13 @@ select * from productos p join compras c on p.id = c.id join clientes cl on c.id
 
 
 3-
+delimiter//
+create function determinar(id_cliente int)
+returns varchar(60)
+deterministic
+begin
+declare id int;
+select id_cliente into id from clientes 
 
 create function perez(id_cliente)
 returns
