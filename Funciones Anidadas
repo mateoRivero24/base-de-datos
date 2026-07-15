@@ -1,3 +1,4 @@
+laguzzi 6
 1-
 DELIMITER //
 
@@ -90,7 +91,7 @@ END IF;
 END //
 
 CREATE FUNCTION analisis_cliente(id_cliente INT)
-RETURNS VARCHAR(60)
+RETURNS VARCHAR(150)
 DETERMINISTIC
 BEGIN
 DECLARE nom VARCHAR(120);
@@ -112,7 +113,7 @@ DELIMITER ;
 DELIMITER //
 
 CREATE FUNCTION alerta_stock(id_producto INT)
-RETURNS VARCHAR(60)
+RETURNS VARCHAR(130)
 DETERMINISTIC
 BEGIN
 DECLARE stocc INT;
@@ -152,4 +153,46 @@ DELIMITER ;
 DELIMITER //
 
 CREATE FUNCTION tiene_largo_correcto(p VARCHAR(60))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+IF CHAR_LENGTH(p) >= 8 THEN
+RETURN 1;
+ELSE
+RETURN 0;
+END IF;
+END //
 
+CREATE FUNCTION tiene_numero(p VARCHAR(60))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+IF p LIKE '%0%' OR p LIKE '%1%' OR p LIKE '%2%' OR p LIKE '%3%' OR p LIKE '%4%' OR p LIKE '%5%' OR p LIKE '%6%' OR p LIKE '%7%' OR p LIKE '%8%' OR p LIKE '%9%' THEN
+RETURN 1;
+ELSE
+RETURN 0;
+END IF;
+END //
+
+CREATE FUNCTION tiene_caracter_especial(p VARCHAR(60))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+IF p LIKE '%!%' OR p LIKE '%-%' OR p LIKE '%\%%' OR p LIKE '%&%' OR p LIKE '%$%' THEN
+RETURN 1;
+ELSE
+RETURN 0;
+END IF;
+END //
+
+CREATE FUNCTION password_valida(p VARCHAR(60))
+RETURNS VARCHAR(25)
+DETERMINISTIC
+BEGIN
+IF tiene_largo_correcto(p) = 1 AND tiene_numero(p) = 1 AND tiene_caracter_especial(p) = 1 THEN
+RETURN 'Contraseña aceptada';
+ELSE
+RETURN 'Contraseña insegura';
+END IF;
+END //
+DELIMITER ;
