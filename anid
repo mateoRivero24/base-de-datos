@@ -14,7 +14,7 @@ END //
 
 
 CREATE FUNCTION Region_Cliente(id_cliente INT)
-RETURNS VARCHAR(20)
+RETURNS VARCHAR(60)
 DETERMINISTIC
 BEGIN
     DECLARE prov_nombre VARCHAR(60);
@@ -32,7 +32,7 @@ DELIMITER ;
 2- 
 DELIMITER //
 CREATE FUNCTION determinar_nivel_cliente(id_cliente INT)
-RETURNS VARCHAR(15)
+RETURNS VARCHAR(60)
 DETERMINISTIC
 BEGIN
     DECLARE gastado DECIMAL(10,2);
@@ -75,7 +75,7 @@ DELIMITER ;
 DELIMITER //
 
 CREATE FUNCTION es_cliente_premium(id_cliente INT)
-RETURNS VARCHAR(15)
+RETURNS VARCHAR(60)
 DETERMINISTIC
 BEGIN
     DECLARE total_gastado DECIMAL(10,2);
@@ -93,7 +93,7 @@ BEGIN
 END //
 
 CREATE FUNCTION analisis_cliente(id_cliente INT)
-RETURNS VARCHAR(200)
+RETURNS VARCHAR(60)
 DETERMINISTIC
 BEGIN
     DECLARE nom VARCHAR(120);
@@ -117,3 +117,44 @@ END //
 DELIMITER ;
 
 4-
+DELIMITER //
+
+CREATE FUNCTION alerta_stock(id_producto INT)
+RETURNS VARCHAR(60)
+DETERMINISTIC
+BEGIN
+    DECLARE stocc INT;
+    
+    SELECT stock INTO stocc FROM productos WHERE id = id_producto;
+    
+    IF stocc = 0 THEN
+        RETURN 'REPOSICION URGENTE';
+    ELSEIF stocc < 20 THEN
+        RETURN 'STOCK BAJO';
+    ELSE
+        RETURN 'OK';
+    END IF;
+END //
+
+CREATE FUNCTION estado_producto(id_producto INT)
+RETURNS VARCHAR(60)
+DETERMINISTIC
+BEGIN
+    DECLARE nom VARCHAR(60);
+    DECLARE stock_actual INT;
+    DECLARE vendidos INT;
+    DECLARE alerta VARCHAR(60);
+    
+    SELECT descripcion, stock INTO nom, stock_actual FROM productos WHERE id = id_producto;
+     
+    SELECT SUM(cant) INTO vendidos FROM compras WHERE producto = id_producto;
+    
+   SET alerta = alerta_stock(id_producto);
+    
+    RETURN CONCAT('Producto: ', nom, ' | Vendidos: ', vendidos, ' | Stock: ', stock_actual, ' | ', alerta);
+END //
+
+DELIMITER ;
+
+5-
+
