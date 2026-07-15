@@ -6,10 +6,10 @@ CREATE FUNCTION provincia_cliente(id_cliente INT)
 RETURNS VARCHAR(60)
 DETERMINISTIC
 BEGIN
-    DECLARE nombre_provincia VARCHAR(60);
+DECLARE nombre_provincia VARCHAR(60);
 
-    SELECT p.nombre INTO nombre_provincia FROM clientes c JOIN ciudades cd ON c.localidad = cd.id JOIN provincias p ON cd.provincia = p.id WHERE c.id = id_cliente;
-    RETURN nombre_provincia;
+SELECT p.nombre INTO nombre_provincia FROM clientes c JOIN ciudades cd ON c.localidad = cd.id JOIN provincias p ON cd.provincia = p.id WHERE c.id = id_cliente;
+RETURN nombre_provincia;
 END //
 
 
@@ -17,13 +17,13 @@ CREATE FUNCTION Region_Cliente(id_cliente INT)
 RETURNS VARCHAR(60)
 DETERMINISTIC
 BEGIN
-    DECLARE prov_nombre VARCHAR(60);
-    DECLARE nom_region VARCHAR(20);
+DECLARE prov_nombre VARCHAR(60);
+DECLARE nom_region VARCHAR(20);
     
-    SET prov_nombre = provincia_cliente(id_cliente);
+SET prov_nombre = provincia_cliente(id_cliente);
     
-    SELECT region INTO nom_region FROM provincias WHERE nombre = prov_nombre; 
-    RETURN nom_region;
+SELECT region INTO nom_region FROM provincias WHERE nombre = prov_nombre; 
+RETURN nom_region;
 END //
 
 DELIMITER ;
@@ -35,24 +35,24 @@ CREATE FUNCTION determinar_nivel_cliente(id_cliente INT)
 RETURNS VARCHAR(60)
 DETERMINISTIC
 BEGIN
-    DECLARE gastado DECIMAL(10,2);
+DECLARE gastado DECIMAL(10,2);
     
-    SELECT SUM(c.cant * p.precio) INTO gastado FROM compras c JOIN productos p ON c.producto = p.id WHERE c.cliente = id_cliente;
+SELECT SUM(c.cant * p.precio) INTO gastado FROM compras c JOIN productos p ON c.producto = p.id WHERE c.cliente = id_cliente;
    
-    IF gastado IS NULL THEN
-        SET gastado = 0.00;
-    END IF;
+IF gastado IS NULL THEN
+SET gastado = 0.00;
+END IF;
     
    
-    IF gastado < 1000 THEN
-        RETURN 'Bronce';
-    ELSEIF gastado < 3000 THEN
-        RETURN 'Plata';
-    ELSEIF gastado < 5000 THEN
-        RETURN 'ORO';
-    ELSE
-        RETURN 'PLATINO';
-    END IF;
+IF gastado < 1000 THEN
+RETURN 'Bronce';
+ELSEIF gastado < 3000 THEN
+RETURN 'Plata';
+ELSEIF gastado < 5000 THEN
+RETURN 'Oro';
+ELSE
+RETURN 'Platino';
+END IF;
 END //
 
 
@@ -62,8 +62,8 @@ BEGIN
  
 IF rango_cliente = 'Bronce' THEN SELECT * FROM productos WHERE precio <= 10.00; 
 ELSEIF rango_cliente = 'Plata' THEN SELECT * FROM productos WHERE precio <= 100.00;
-ELSEIF rango_cliente = 'ORO' THEN SELECT * FROM productos WHERE precio <= 500.00;
-ELSEIF rango_cliente = 'PLATINO' THEN SELECT * FROM productos WHERE precio <= 500.00;
+ELSEIF rango_cliente = 'Oro' THEN SELECT * FROM productos WHERE precio <= 500.00;
+ELSEIF rango_cliente = 'Platino' THEN SELECT * FROM productos WHERE precio <= 500.00;
 END IF;
 END //
 DELIMITER ;
@@ -78,40 +78,32 @@ CREATE FUNCTION es_cliente_premium(id_cliente INT)
 RETURNS VARCHAR(60)
 DETERMINISTIC
 BEGIN
-    DECLARE total_gastado DECIMAL(10,2);
+DECLARE total_gastado DECIMAL(10,2);
     
-    SELECT SUM(c.cant * p.precio) INTO total_gastado 
-    FROM compras c 
-    JOIN productos p ON c.producto = p.id 
-    WHERE c.cliente = id_cliente;
+SELECT SUM(c.cant * p.precio) INTO total_gastado FROM compras c JOIN productos p ON c.producto = p.id WHERE c.cliente = id_cliente;
     
-    IF total_gastado > 5000 THEN
-        RETURN 'Premium';
-    ELSE
-        RETURN 'Normal';
-    END IF;
+IF total_gastado > 5000 THEN
+RETURN 'Premium';
+ELSE
+RETURN 'Normal';
+END IF;
 END //
 
 CREATE FUNCTION analisis_cliente(id_cliente INT)
 RETURNS VARCHAR(60)
 DETERMINISTIC
 BEGIN
-    DECLARE nom VARCHAR(120);
-    DECLARE gastado DECIMAL(10,2);
-    DECLARE tipo VARCHAR(15);
+DECLARE nom VARCHAR(120);
+DECLARE gastado DECIMAL(10,2);
+DECLARE tipo VARCHAR(15);
     
-    SELECT CONCAT(nombre, ' ', apellido) INTO nom 
-    FROM clientes 
-    WHERE id = id_cliente;
+SELECT CONCAT(nombre, ' ', apellido) INTO nom FROM clientes WHERE id = id_cliente;
    
-    SELECT SUM(c.cant * p.precio) INTO gastado 
-    FROM compras c 
-    JOIN productos p ON c.producto = p.id 
-    WHERE c.cliente = id_cliente;
+SELECT SUM(c.cant * p.precio) INTO gastado FROM compras c JOIN productos p ON c.producto = p.id WHERE c.cliente = id_cliente;
     
-    SET tipo = es_cliente_premium(id_cliente);
+SET tipo = es_cliente_premium(id_cliente);
     
-    RETURN CONCAT(nom, ' | Gasto: ', gastado, ' | ', tipo);
+RETURN CONCAT(nom, ' | Gasto: ', gastado, ' | ', tipo);
 END //
 
 DELIMITER ;
@@ -123,38 +115,41 @@ CREATE FUNCTION alerta_stock(id_producto INT)
 RETURNS VARCHAR(60)
 DETERMINISTIC
 BEGIN
-    DECLARE stocc INT;
+DECLARE stocc INT;
     
-    SELECT stock INTO stocc FROM productos WHERE id = id_producto;
+SELECT stock INTO stocc FROM productos WHERE id = id_producto;
     
-    IF stocc = 0 THEN
-        RETURN 'REPOSICION URGENTE';
-    ELSEIF stocc < 20 THEN
-        RETURN 'STOCK BAJO';
-    ELSE
-        RETURN 'OK';
-    END IF;
+IF stocc = 0 THEN
+RETURN 'REPOSICION URGENTE';
+ELSEIF stocc < 20 THEN
+RETURN 'STOCK BAJO';
+ELSE
+RETURN 'OK';
+END IF;
 END //
 
 CREATE FUNCTION estado_producto(id_producto INT)
 RETURNS VARCHAR(60)
 DETERMINISTIC
 BEGIN
-    DECLARE nom VARCHAR(60);
-    DECLARE stock_actual INT;
-    DECLARE vendidos INT;
-    DECLARE alerta VARCHAR(60);
+DECLARE nom VARCHAR(60);
+DECLARE stock_actual INT;
+DECLARE vendidos INT;
+DECLARE alerta VARCHAR(60);
     
-    SELECT descripcion, stock INTO nom, stock_actual FROM productos WHERE id = id_producto;
+SELECT descripcion, stock INTO nom, stock_actual FROM productos WHERE id = id_producto;
      
-    SELECT SUM(cant) INTO vendidos FROM compras WHERE producto = id_producto;
+SELECT SUM(cant) INTO vendidos FROM compras WHERE producto = id_producto;
     
-   SET alerta = alerta_stock(id_producto);
+SET alerta = alerta_stock(id_producto);
     
-    RETURN CONCAT('Producto: ', nom, ' | Vendidos: ', vendidos, ' | Stock: ', stock_actual, ' | ', alerta);
+RETURN CONCAT('Producto: ', nom, ' | Vendidos: ', vendidos, ' | Stock: ', stock_actual, ' | ', alerta);
 END //
 
 DELIMITER ;
 
 5-
+DELIMITER //
+
+CREATE FUNCTION tiene_largo_correcto(p VARCHAR(60))
 
