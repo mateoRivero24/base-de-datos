@@ -1,48 +1,119 @@
 1-
-Delimiter//
-create function Region_cliente(cliente)
-returns varchar(60);
+DELIMITER //
+
+
+CREATE FUNCTION provincia_cliente(id_cliente INT)
+RETURNS VARCHAR(60)
 DETERMINISTIC
-begin
-declare nomreg varchar(60);
+BEGIN
+    DECLARE nombre_provincia VARCHAR(60);
 
-select p.region INTO nompro from clientes cl join ciudades c on cl.id=c.id join provincia p on c.id=p.id where p.id=cl.id;
-returns nompro;
-
-create function provincia_cliente(cliente)
-returns varchar (60);
+    SELECT p.nombre INTO nombre_provincia FROM clientes c JOIN ciudades cd ON c.localidad = cd.id JOIN provincias p ON cd.provincia = p.id WHERE c.id = id_cliente;
+    RETURN nombre_provincia;
+END //
 
 
-declare nompr varchar(60);
-set nompro = nompr;
-select p.nombre INTO nompro from clientes cl join ciudades c on cl.id=c.id join provincia p on c.id=p.id where p.id=cl.id;
-returns nompro;
-END;
-Delimiter;
+CREATE FUNCTION Region_Cliente(id_cliente INT)
+RETURNS VARCHAR(20)
+DETERMINISTIC
+BEGIN
+    DECLARE prov_nombre VARCHAR(60);
+    DECLARE nom_region VARCHAR(20);
+    
+    SET prov_nombre = provincia_cliente(id_cliente);
+    
+    SELECT region INTO nom_region FROM provincias WHERE nombre = prov_nombre; 
+    RETURN nom_region;
+END //
+
+DELIMITER ;
 
 
-2- t
+2- 
+DELIMITER //
+CREATE FUNCTION determinar_nivel_cliente(id_cliente INT)
+RETURNS VARCHAR(15)
+DETERMINISTIC
+BEGIN
+    DECLARE gastado DECIMAL(10,2);
+    
+    SELECT SUM(c.cant * p.precio) INTO gastado FROM compras c JOIN productos p ON c.producto = p.id WHERE c.cliente = id_cliente;
+   
+    IF gastado IS NULL THEN
+        SET gastado = 0.00;
+    END IF;
+    
+   
+    IF gastado < 1000 THEN
+        RETURN 'Bronce';
+    ELSEIF gastado < 3000 THEN
+        RETURN 'Plata';
+    ELSEIF gastado < 5000 THEN
+        RETURN 'ORO';
+    ELSE
+        RETURN 'PLATINO';
+    END IF;
+END //
 
-create procedure nivel as 
-@idcl int;
 
-select * from productos p join compras c on p.id = c.id join clientes cl on c.id = cl.id
+
+CREATE PROCEDURE mostrar_productos_por_nivel(rango_cliente VARCHAR(15))
+BEGIN
+ 
+IF rango_cliente = 'Bronce' THEN SELECT * FROM productos WHERE precio <= 10.00; 
+ELSEIF rango_cliente = 'Plata' THEN SELECT * FROM productos WHERE precio <= 100.00;
+ELSEIF rango_cliente = 'ORO' THEN SELECT * FROM productos WHERE precio <= 500.00;
+ELSEIF rango_cliente = 'PLATINO' THEN SELECT * FROM productos WHERE precio <= 500.00;
+END IF;
+END //
+DELIMITER ;
+
 
 
 
 3-
-delimiter//
-create function determinar(id_cliente int)
-returns varchar(60)
-deterministic
-begin
-declare id int;
-select id_cliente into id from clientes 
+DELIMITER //
 
-create function perez(id_cliente)
-returns
-declare nombre varchar(60);
-declare apellido varchar(60);
-declare nivel varchar(60);
-declare precio decimal(10,2);
+CREATE FUNCTION es_cliente_premium(id_cliente INT)
+RETURNS VARCHAR(15)
+DETERMINISTIC
+BEGIN
+    DECLARE total_gastado DECIMAL(10,2);
+    
+    SELECT SUM(c.cant * p.precio) INTO total_gastado 
+    FROM compras c 
+    JOIN productos p ON c.producto = p.id 
+    WHERE c.cliente = id_cliente;
+    
+    IF total_gastado > 5000 THEN
+        RETURN 'Premium';
+    ELSE
+        RETURN 'Normal';
+    END IF;
+END //
 
+CREATE FUNCTION analisis_cliente(id_cliente INT)
+RETURNS VARCHAR(200)
+DETERMINISTIC
+BEGIN
+    DECLARE nom VARCHAR(120);
+    DECLARE gastado DECIMAL(10,2);
+    DECLARE tipo VARCHAR(15);
+    
+    SELECT CONCAT(nombre, ' ', apellido) INTO nom 
+    FROM clientes 
+    WHERE id = id_cliente;
+   
+    SELECT SUM(c.cant * p.precio) INTO gastado 
+    FROM compras c 
+    JOIN productos p ON c.producto = p.id 
+    WHERE c.cliente = id_cliente;
+    
+    SET tipo = es_cliente_premium(id_cliente);
+    
+    RETURN CONCAT(nom, ' | Gasto: ', gastado, ' | ', tipo);
+END //
+
+DELIMITER ;
+
+4-
