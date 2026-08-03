@@ -1,0 +1,31 @@
+1-
+drop database if exist oficina
+Create database oficina
+use database oficina
+
+create table rol(id int primary key, nombrer varchar(50), horapaga decimal(10,2));
+
+create table empleado(id int primary key auto_increment, nombre varchar(50), tiempot int 7, dni varchar(30),foreing key (rol) references nombrer(rol));
+
+2-
+DELIMITER//
+create procedure fila  
+begin
+ALTER TABLE empleado ADD COLUMN salario decimal(10,2);
+end;
+DELIMITER;
+3-
+DELIMITER // 
+CREATE TRIGGER trigger_ActualizarSalario
+AFTER UPDATE ON rol
+FOR EACH ROW
+BEGIN
+    UPDATE empleado
+    SET salario = horast * NEW.r.cantidad_pago
+    join rol on rol.id r = usuarios.id_rol
+    WHERE rol.id = NEW.id;
+END;
+DELIMITER;
+
+4-
+create function elim as
