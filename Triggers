@@ -27,5 +27,28 @@ BEGIN
 END;
 DELIMITER;
 
-4-
-create function elim as
+4- (T)
+create function elim(id_empleado int);
+returns int;
+deterministic
+begin
+declare idemaelim int;
+select * 
+
+
+5- 
+delimiter//
+CREATE TRIGGER trigger_generico23
+BEFORE Delete ON Empleado
+if rol_empleado == "Gerente"
+raise exception 'No se puede eliminar gerentes';
+else return 'ok';
+FOR EACH ROW
+BEGIN
+
+end;
+delimiter;
+
+
+
+
