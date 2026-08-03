@@ -14,6 +14,8 @@ begin
 ALTER TABLE empleado ADD COLUMN salario decimal(10,2);
 end;
 DELIMITER;
+
+
 3-
 DELIMITER // 
 CREATE TRIGGER trigger_ActualizarSalario
@@ -27,25 +29,26 @@ BEGIN
 END;
 DELIMITER;
 
-4- (T)
+
+4- 
+Delimiter//
 create function elim(id_empleado int);
 returns int;
 deterministic
 begin
-declare idemaelim int;
-select * 
-
+delete * from empleados where id=id_empleado;
+end;
+Delimiter;
 
 5- 
 delimiter//
 CREATE TRIGGER trigger_generico23
 BEFORE Delete ON Empleado
-if rol_empleado == "Gerente"
-raise exception 'No se puede eliminar gerentes';
-else return 'ok';
 FOR EACH ROW
 BEGIN
-
+if rol_empleado == "Gerente"
+raise exception 'No se puede eliminar gerentes';
+else return '';
 end;
 delimiter;
 
