@@ -36,7 +36,7 @@ create function elim(id_empleado int);
 returns int;
 deterministic
 begin
-delete * from empleados where id=id_empleado;
+delete * from empleado where id=id_empleado;
 end;
 Delimiter;
 
