@@ -1,0 +1,131 @@
+1-
+Delimiter//
+CREATE TRIGGER fechai
+BEFORE INSERT ON Libros
+FOR EACH ROW
+BEGIN
+    if AnioPublicacion > CURdate()
+Then 
+Raise exception 'No se puede ingresar una fecha incoherente'
+
+END;
+Delimiter;
+
+2-
+Delimiter//
+CREATE TRIGGER usuariol
+BEFORE INSERT ON Usuarios
+FOR EACH ROW
+BEGIN
+    if lenght(Nombre) > 3()
+Then 
+Raise exception 'No se puede ingresar un nombre mayor a tres caracteres'
+
+END;
+
+3-
+Delimiter//
+CREATE TRIGGER fecham
+BEFORE INSERT ON prestamos
+FOR EACH ROW
+BEGIN
+    if FechaPrestamo > FechaDevolucion
+Then 
+Raise exception 'No se puede poner una fecha anterior al prestamo como devoluciuon'
+
+END;
+Delimiter;
+
+4-
+Delimiter//
+CREATE TRIGGER genn
+BEFORE INSERT ON Genero
+FOR EACH ROW
+BEGIN
+    
+insert into Generos(GeneroID, UPPER(Nombre)) 
+
+END;
+Delimiter;
+
+5-
+Delimiter//
+CREATE TRIGGER autorr
+BEFORE INSERT ON Autores
+FOR EACH ROW
+BEGIN
+    
+insert into Autores(AutorID, UPPER(Nombre), Nacionalidad) 
+
+END;
+Delimiter;
+
+6-
+Delimiter//
+CREATE TRIGGER antiguo
+AFTER UPDATE ON Prestamo
+FOR EACH ROW
+BEGIN
+    
+if CURdate > FechaDevolucion
+THEN
+if LibroID = (select LibroID from Libros
+insert into nodev values(LibroID, Nombre, GeneroID, AnioPublicacion, ISBN)
+END;
+Delimiter;
+
+7- 
+Delimiter//
+CREATE TRIGGER isbnr
+BEFORE INSERT ON Libros
+FOR EACH ROW
+BEGIN
+
+if ISBN in(Select ISBN from Libros)
+raise exception 'No se puede ingresar un libro con el ISBN repetido'
+
+END;
+Delimiter;
+
+8-
+Delimiter//
+CREATE TRIGGER Autorv
+BEFORE INSERT ON Libro
+FOR EACH ROW
+BEGIN
+
+if AutorID not in(select AutorID from Libros) 
+else if AutorID = null
+THEN
+raise exception 'No existe el nombre de ese autor'
+END;
+Delimiter;
+
+9-
+Delimiter//
+CREATE TRIGGER Libronull
+BEFORE INSERT ON Prestamo
+FOR EACH ROW
+BEGIN
+
+if LibroID not in(select LibroID from Libros) 
+else if LibroID = null
+THEN
+raise exception 'No existe el libro que quiere'
+END;
+Delimiter;
+
+10- no gracias
+
+
+11-
+Delimiter//
+CREATE TRIGGER nomod
+BEFORE UPDATE ON Prestamo
+FOR EACH ROW
+BEGIN
+
+if set FechaDevolucion
+raise exception 'No se puede modificar la fecha de devolucion'
+END;
+Delimiter;
