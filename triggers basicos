@@ -116,7 +116,14 @@ END;
 Delimiter;
 
 10- no gracias
+Delimiter//
+CREATE TRIGGER Caracternop
+BEFORE INSERT ON Libros
+FOR EACH ROW
+BEGIN
+if 
 
+END;
 
 11-
 Delimiter//
