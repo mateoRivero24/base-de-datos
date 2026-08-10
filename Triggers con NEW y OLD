@@ -1,0 +1,101 @@
+1-
+Create table Registroll (regidll int primary key auto_increment, LibroID INT,)
+    Titulo VARCHAR(255) NOT NULL,
+    AutorID INT,  GeneroID INT,  AnioPublicacion INT,  ISBN VARCHAR(20),  PRIMARY KEY (LibroID),FOREIGN KEY (AutorID) REFERENCES Autores(AutorID),  FOREIGN KEY (GeneroID) REFERENCES Generos(GeneroID), Foreign key (LibroID) References Libros(LibroID))
+Delimiter//
+CREATE TRIGGER 
+BEFORE insert ON Libros
+FOR EACH ROW
+BEGIN
+insert into registrolli values ( LibroID, Titulo, AutorID, GeneroID, AnioPublicacion, ISBN)
+END;
+Delimiter;
+
+
+2-
+Create table registrol(regidl int primary key auto_increment, nombre_nuevo varchar(255), nombre_viejo(255), LibroID int, Foreign key (LibroID) References Libros(LibroID));
+Delimiter//
+CREATE TRIGGER 
+BEFORE UPDATE ON Libros
+FOR EACH ROW
+BEGIN
+IF NEW(Titulo) <> OLD(Titulo)
+Then
+insert into registrol values (NEW(Titulo), OLD(Titulo), LibroID) 
+
+END;
+Delimiter;
+
+3-
+Create table Registrou(regidu int primary key auto_increment, mail_nuevo varchar(255), mail_viejo varchar(255), UsuarioID int, Foreign key (UsuariosID) References Usuarios(UsuarioID));
+Delimiter//
+Create Trigger
+BEFORE UPDATE ON Usuarios
+FOR EACH ROW
+Begin
+IF NEW(Email) <> OLD(Email)
+Then
+Insert into Registrou values( New(Email), OLD(Email), UsuarioID)
+END;
+Delimiter;
+
+4-
+Create table Registroa (regida int primary key auto_increment, Nombre varchar(60), Nacionalidad varchar(61), AutorID int, Foreign key (AutorID) References Autores(AutorID));
+Delimiter//
+Create Trigger
+BEFORE DELETE ON Autores
+FOR EACH ROW
+Begin
+Insert into Registroa values( Nombre,Nacionalidad,AutorID)
+END;
+Delimiter;
+
+
+
+
+
+
+5-
+Create table Registroll (regidll int primary key auto_increment, LibroID INT,)
+    Titulo VARCHAR(255) NOT NULL,
+    AutorID INT,
+    GeneroID INT,
+    AnioPublicacion INT,
+    ISBN VARCHAR(20),
+    PRIMARY KEY (LibroID),
+    FOREIGN KEY (AutorID) REFERENCES Autores(AutorID),
+    FOREIGN KEY (GeneroID) REFERENCES Generos(GeneroID),
+    Foreign key (LibroID) References Libros(LibroID))
+Delimiter//
+Create Trigger
+BEFORE DELETE ON Autores
+FOR EACH ROW
+Begin
+Insert into Registroll values( LibroID, Titulo, AutorID, GeneroID, AnioPublicacion, ISBN)
+END;
+Delimiter;
+
+
+6- no gracias
+
+7-
+Delimiter//
+Create Trigger
+BEFORE INSERT ON Prestamos
+FOR EACH ROW
+Begin
+if 
+END;
+Delimiter;
+
+
+
+
+
+
+
+
+
+
+
+
