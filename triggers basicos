@@ -115,14 +115,14 @@ raise exception 'No existe el libro que quiere'
 END;
 Delimiter;
 
-10- no gracias
+10- 
 Delimiter//
 CREATE TRIGGER Caracternop
 BEFORE INSERT ON Libros
 FOR EACH ROW
 BEGIN
-if 
-
+if  libroID regexp ' A B C D E F ! " # $ % & / ( ) = ? ¡ ¿ + } { - . , > < ] [ * Z K J H G P O I U Y T R Q W N L G '
+Raise exception 'No se pueden ingresar caracteres en el id'
 END;
 
 11-
