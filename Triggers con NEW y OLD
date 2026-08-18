@@ -1,41 +1,39 @@
 1-
-Create table Registroll (regidll int primary key auto_increment, LibroID INT,)
-    Titulo VARCHAR(255) NOT NULL,
-    AutorID INT,  GeneroID INT,  AnioPublicacion INT,  ISBN VARCHAR(20),  PRIMARY KEY (LibroID),FOREIGN KEY (AutorID) REFERENCES Autores(AutorID),  FOREIGN KEY (GeneroID) REFERENCES Generos(GeneroID), Foreign key (LibroID) References Libros(LibroID))
+Create table Registroll (regidll int primary key auto_increment, LibroID INT,
+Titulo VARCHAR(255) NOT NULL,
+AutorID INT,  GeneroID INT,  AnioPublicacion INT,  ISBN VARCHAR(20),  PRIMARY KEY (LibroID),FOREIGN KEY (AutorID) REFERENCES Autores(AutorID),  FOREIGN KEY (GeneroID) REFERENCES Generos(GeneroID), Foreign key (LibroID) References Libros(LibroID))
 Delimiter//
-CREATE TRIGGER 
+CREATE TRIGGER
 BEFORE insert ON Libros
 FOR EACH ROW
 BEGIN
-insert into registrolli values ( LibroID, Titulo, AutorID, GeneroID, AnioPublicacion, ISBN)
+INSERT INTO Registroll (LibroID, Titulo, AutorID, GeneroID, AnioPublicacion, ISBN) VALUES (NEW.LibroID, NEW.Titulo, NEW.AutorID, NEW.GeneroID, NEW.AnioPublicacion, NEW.ISBN);
 END;
 Delimiter;
 
-
 2-
-Create table registrol(regidl int primary key auto_increment, nombre_nuevo varchar(255), nombre_viejo(255), LibroID int, Foreign key (LibroID) References Libros(LibroID));
+Create table registrol(regidl int primary key auto_increment, nombre_nuevo varchar(255), nombre_viejo varchar(255), LibroID int, Foreign key (LibroID) References Libros(LibroID));
 Delimiter//
-CREATE TRIGGER 
+CREATE TRIGGER
 BEFORE UPDATE ON Libros
 FOR EACH ROW
 BEGIN
-IF NEW(Titulo) <> OLD(Titulo)
-Then
-insert into registrol values (NEW(Titulo), OLD(Titulo), LibroID) 
-
+IF NEW.Titulo <> OLD.Titulo
+THEN INSERT INTO registrol (nombre_nuevo, nombre_viejo, LibroID) VALUES (NEW.Titulo, OLD.Titulo, OLD.LibroID);
+END if;
 END;
 Delimiter;
 
 3-
-Create table Registrou(regidu int primary key auto_increment, mail_nuevo varchar(255), mail_viejo varchar(255), UsuarioID int, Foreign key (UsuariosID) References Usuarios(UsuarioID));
+Create table Registrou(regidu int primary key auto_increment, mail_nuevo varchar(255), mail_viejo varchar(255), UsuarioID int, Foreign key (UsuarioID) References Usuarios(UsuarioID));
 Delimiter//
 Create Trigger
 BEFORE UPDATE ON Usuarios
 FOR EACH ROW
 Begin
-IF NEW(Email) <> OLD(Email)
-Then
-Insert into Registrou values( New(Email), OLD(Email), UsuarioID)
+IF NEW.Email <> OLD.Email
+THEN INSERT INTO Registrou (mail_nuevo, mail_viejo, UsuarioID) VALUES (NEW.Email, OLD.Email, OLD.UsuarioID);
+END if;
 END;
 Delimiter;
 
@@ -46,56 +44,99 @@ Create Trigger
 BEFORE DELETE ON Autores
 FOR EACH ROW
 Begin
-Insert into Registroa values( Nombre,Nacionalidad,AutorID)
+INSERT INTO Registroa (Nombre, Nacionalidad, AutorID) VALUES (OLD.Nombre, OLD.Nacionalidad, OLD.AutorID);
 END;
 Delimiter;
 
-
-
-
-
-
 5-
-Create table Registroll (regidll int primary key auto_increment, LibroID INT,)
-    Titulo VARCHAR(255) NOT NULL,
-    AutorID INT,
-    GeneroID INT,
-    AnioPublicacion INT,
-    ISBN VARCHAR(20),
-    PRIMARY KEY (LibroID),
-    FOREIGN KEY (AutorID) REFERENCES Autores(AutorID),
-    FOREIGN KEY (GeneroID) REFERENCES Generos(GeneroID),
-    Foreign key (LibroID) References Libros(LibroID))
+Create table Registroll_del (regidll int primary key auto_increment, LibroID INT,Titulo VARCHAR(255) NOT NULL, AutorID INT,GeneroID INT,AnioPublicacion INT,ISBN VARCHAR(20),PRIMARY KEY (LibroID),FOREIGN KEY (AutorID) REFERENCES Autores(AutorID),FOREIGN KEY (GeneroID) REFERENCES Generos(GeneroID),Foreign key (LibroID) References Libros(LibroID));
+
 Delimiter//
-Create Trigger
+Create Trigger punto5
 BEFORE DELETE ON Autores
 FOR EACH ROW
 Begin
-Insert into Registroll values( LibroID, Titulo, AutorID, GeneroID, AnioPublicacion, ISBN)
+INSERT INTO Registroll_del (LibroID, Titulo, AutorID, GeneroID, AnioPublicacion, ISBN)
+SELECT LibroID, Titulo, AutorID, GeneroID, AnioPublicacion, ISBN from Libros where AutorID = OLD.AutorID;
 END;
 Delimiter;
-
 
 6- no gracias
 
 7-
+Create table RegistroPrestamoFallido (regidpf int primary key auto_increment, LibroID INT, UsuarioID INT, FechaPrestamo DATE, Foreign key (LibroID) References Libros(LibroID));
 Delimiter//
-Create Trigger
+Create TRIGGER validarprestamo
 BEFORE INSERT ON Prestamos
 FOR EACH ROW
-Begin
-if 
+BEGIN
+INSERT INTO RegistroPrestamoFallido (LibroID, UsuarioID, FechaPrestamo)
+VALUES (NEW.LibroID, NEW.UsuarioID, NEW.FechaPrestamo);
 END;
 Delimiter;
 
+8-
+Create table RegistroLimitePrestamos (regidlp int primary key auto_increment, UsuarioID INT, Foreign key (UsuarioID) References Usuarios(UsuarioID));
+Delimiter//
+CREATE TRIGGER maxpres
+BEFORE INSERT ON Prestamos
+FOR EACH ROW
+BEGIN
+INSERT INTO RegistroLimitePrestamos (UsuarioID)
+VALUES (NEW.UsuarioID);
+END;
+Delimiter;
 
+9-
+Create table RegistroAutor_del (regida_del int primary key auto_increment, AutorID int, Nombre varchar(255), Nacionalidad varchar(255), Foreign key (AutorID) References Autores(AutorID));
+Delimiter//
+Create Trigger autr
+BEFORE DELETE ON Autores
+FOR EACH ROW
+Begin
+INSERT INTO RegistroAutor_del (AutorID, Nombre, Nacionalidad)
+VALUES (OLD.AutorID, OLD.Nombre, OLD.Nacionalidad);
+END;
+Delimiter;
 
+10-
+Create table RegistroGenero_del (regidg_del int primary key auto_increment, GeneroID int, Nombre varchar(255), Foreign key (GeneroID) References Generos(GeneroID));
+Delimiter//
+Create Trigger genr
+BEFORE DELETE ON Generos
+FOR EACH ROW
+Begin
+INSERT INTO RegistroGenero_del (GeneroID, Nombre)
+VALUES (OLD.GeneroID, OLD.Nombre);
+END;
+Delimiter;
 
+11-
+Create table RegistroUsuario_del (regidu_del int primary key auto_increment, UsuarioID int, Nombre varchar(255), Email varchar(255), Foreign key (UsuarioID) References Usuarios(UsuarioID));
+Delimiter//
+Create Trigger usuar
+BEFORE DELETE ON Usuarios
+FOR EACH ROW
+Begin
+INSERT INTO RegistroUsuario_del (UsuarioID, Nombre, Email)
+VALUES (OLD.UsuarioID, OLD.Nombre, OLD.Email);
+END;
+Delimiter;
 
+12-
+Create table HistorialCambios (regidh int primary key auto_increment, fecha_intento DATETIME, campo_modificado varchar(100), LibroID int, Foreign key (LibroID) References Libros(LibroID));
+Delimiter//
+CREATE TRIGGER historialf
+BEFORE UPDATE ON Libros
+FOR EACH ROW
+BEGIN
+DECLARE nombre_campo VARCHAR(100);
 
-
-
-
-
-
+IF NEW.Titulo <> OLD.Titulo
+THEN
+SET nombre_campo = 'Titulo';
+INSERT INTO HistorialCambios (fecha_intento, campo_modificado, LibroID) VALUES (NOW(), nombre_campo, OLD.LibroID);
+END IF;
+END;
+Delimiter;
 
