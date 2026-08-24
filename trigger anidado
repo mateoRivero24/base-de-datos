@@ -1,1 +1,20 @@
+1-
+delimiter//
+using sistem AAA
+Create function tt as 
+@id int;
+returns varchar(60);
+begin
+declare nombrelib varchar(30);
+select titulo into nombrelib from Libros where Libro_ID =  @id;
+end;
+
+delimiter;
+create table auditoria(audit_ID int primary key auto_increment, LibroID INT,Titulo VARCHAR(255) NOT NULL);
+
+create trigger ta
+after insert on nombrelib;
+repeat each row
+begin
+insert into auditoria Libro_ID,Titulo
 
