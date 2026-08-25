@@ -8,7 +8,7 @@ end procedure;
 
 repeat
 
-select 
+select prestamos from usuarios join prestamos on usuario_id = prestamosID where   order by prestamos desc n);
 
 
 a = a+1
