@@ -1,0 +1,15 @@
+1-
+DELIMITER//
+Create procedure usid as
+@usuario int;
+@n int;
+select usuario_id from usuarios where usuario_id = @usuario;
+end procedure;
+
+repeat
+
+select 
+
+
+a = a+1
+until a = n
