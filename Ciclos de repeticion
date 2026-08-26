@@ -4,12 +4,23 @@ Create procedure usid as
 @usuario int;
 @n int;
 select usuario_id from usuarios where usuario_id = @usuario;
-end procedure;
+end;
+declare m int
+ set m = 0
+while m <= n   do
+return select prestamoid from prestamos where usuarioID = @usuario
+m++;
+end while;
 
-repeat
+2-
+DELIMITER//
 
-select prestamos from usuarios join prestamos on usuario_id = prestamosID where   order by prestamos desc n);
-
-
-a = a+1
-until a = n
+create procedure ll as
+@nombre varchar(60);
+@l int
+Repeat 
+select titulo into nombre from libros where libroid = l
+l++;
+until nombre repeats "harry potter";
+end repeat;
+DELIMITER;
