@@ -17,10 +17,24 @@ DELIMITER//
 
 create procedure ll as
 @nombre varchar(60);
-@l int
+@l int;
+set l = 0;
 Repeat 
 select titulo into nombre from libros where libroid = l
 l++;
 until nombre repeats "harry potter";
 end repeat;
+DELIMITER;
+
+3-
+DELIMITER//
+create procedure as
+@
+
+loop loopp
+
+if usuarioID not exist then
+leave loop;
+end if;
+end loop;
 DELIMITER;
