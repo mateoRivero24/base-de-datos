@@ -28,13 +28,25 @@ DELIMITER;
 
 3-
 DELIMITER//
-create procedure as
-@
-
-loop loopp
-
+create procedure contar()
+begin
+declare contador int;
+loopp loop;
+select @ from prestamos join usuarios u on usuario_id = u.usuario_id where usuario_id = contador;
+contador = contador + 1;
 if usuarioID not exist then
-leave loop;
+leave loopp;
 end if;
 end loop;
 DELIMITER;
+
+4-
+
+create function clasico(Libro_id int)
+returns int;
+begin
+declare clasicos varchar(40);
+
+while 
+
+end while;
