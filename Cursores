@@ -147,7 +147,34 @@ else return 'Nombre', descripcion, 'Precio', precio, 'Categoria', 'Caro'
 
 
 5-
+  DECLARE CURSOR subtotal FOR 
+    SELECT stock, precio FROM productos;
 
+    DECLARE @stock INT;
+    DECLARE @precio DECIMAL(10, 2);
+
+    OPEN subtotal;
+    FETCH NEXT FROM subtotal INTO @stock, @precio;
+        BEGIN
+            DECLARE CONTINUE HANDLER FOR NOT FOUND loop Boolean = false;
+         --   WHILE @@FETCH_STATUS = 0    
+            WHILE loop
+                BEGIN
+                    DECLARE subtotal = 0 Decimal(10, 2);
+                    DECLARE total = 0 Decimal (10,2);
+
+                        SELECT precio as 'precio', stock as 'stock', subtotal as 'subtotal'
+                        SET subtotal = subtotal + (stock * precio);
+                        SET total = total + (subtotal * stock);
+
+                    FETCH NEXT FROM subtotal INTO @stock, @precio;
+                END
+
+            END WHILE; 
+        END
+    CLOSE nombre_cursor;
+    
+    DEALLOCATE nombre_cursor;
 
 
 
