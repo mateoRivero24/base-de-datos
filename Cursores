@@ -1,0 +1,153 @@
+1-
+Declare cursor_uno cursor for
+select * from productos
+@id INT 
+@descripcion VARCHAR(60);
+@marca VARCHAR(40);
+@precio DECIMAL(7,2);
+@stock INT;
+
+open curosr_uno
+fetch next from into vk;
+begin
+DECLARE CONTINUE HANDLER FOR NOT FOUND loop Boolean = false;
+while loop 
+begin
+select @id as 'ID' @descripcion as 'Nombre', @marca as 'Marca', @precio as 'Precio', @stock = 'Stock' where ID != null
+fetch next from @id, @descripcion, @marca, @precio, @stock;
+end
+end while;
+end
+close cursor_uno;
+deallocate cursor_uno;
+
+DECLARE CURSOR subtotal FOR 
+    SELECT stock, precio FROM productos;
+
+    DECLARE @stock INT;
+    DECLARE @precio DECIMAL(10, 2);
+
+    OPEN subtotal;
+    FETCH NEXT FROM subtotal INTO @stock, @precio;
+        BEGIN
+            DECLARE CONTINUE HANDLER FOR NOT FOUND loop Boolean = false;
+      
+            WHILE loop
+                BEGIN
+                    DECLARE subtotal = 0 Decimal(10, 2);
+
+                        SELECT precio as 'precio', stock as 'stock', subtotal as 'subtotal'
+                        SET subtotal = subtotal + (stock * precio);
+
+                    FETCH NEXT FROM subtotal INTO @stock, @precio;
+                END
+
+            END WHILE; 
+        END
+    CLOSE nombre_cursor;
+    
+    DEALLOCATE nombre_cursor;
+
+
+
+2-
+DECLARE CURSOR subtotal FOR 
+    SELECT provincia, capital, poblacion FROM provincias;
+
+    DECLARE @poblacion INT;
+    DECLARE @provincia varchar(40);
+    DECLARE @capital varchar(40);
+
+    OPEN subtotal;
+    FETCH NEXT FROM subtotal INTO @provincia @capital @poblacion;
+        BEGIN
+            DECLARE CONTINUE HANDLER FOR NOT FOUND loop Boolean = false;
+             
+            WHILE loop
+                BEGIN
+                    DECLARE subtotal varchar(120);
+
+                        SELECT provincia as 'provincia', capital as 'capital', poblacion as 'poblacion', subtotal as 'subtotal'
+                        SET subtotal = subtotal ;
+
+                    FETCH NEXT FROM subtotal INTO @provincia @capital @poblacion;
+                END
+
+            END WHILE; 
+        END
+    CLOSE nombre_cursor;
+    
+    DEALLOCATE nombre_cursor;
+
+3-
+DECLARE CURSOR subtotal FOR 
+ SELECT * FROM productos;
+
+@id INT 
+@descripcion VARCHAR(60);
+@marca VARCHAR(40);
+@precio DECIMAL(7,2);
+@stock INT;
+
+    OPEN subtotal;
+    FETCH NEXT FROM subtotal INTO ;
+        BEGIN
+            DECLARE CONTINUE HANDLER FOR NOT FOUND loop Boolean = false;
+             
+            WHILE loop
+                BEGIN
+                    DECLARE subtotal varchar(120);
+
+                        SELECT select * from productos where stock = 0;
+                        
+
+                   FETCH NEXT FROM subtotal INTO @id INT, @descripcion VARCHAR(60),@marca VARCHAR(40),@precio DECIMAL(7,2),@stock INT;
+
+                END
+
+            END WHILE; 
+        END
+    CLOSE nombre_cursor;
+    
+    DEALLOCATE nombre_cursor;
+
+
+
+4-
+  DECLARE CURSOR subtotal FOR 
+    SELECT stock, precio FROM productos;
+
+    DECLARE @stock INT;
+    DECLARE @precio DECIMAL(10, 2);
+    DECLARE @descripcion varchar(90);
+    OPEN subtotal;
+    FETCH NEXT FROM subtotal INTO @vdescripcion @stock, @precio;
+        BEGIN
+            DECLARE CONTINUE HANDLER FOR NOT FOUND loop Boolean = false;
+            
+            WHILE loop
+                BEGIN
+                   
+
+                        SELECT descripcion as 'descripcion', precio as 'precio', stock as 'stock'
+                        if precio <10000 then
+                   return 'Nombre', descripcion, 'Precio', precio, 'Categoria', 'Barato';
+else if precio > 10000 and < 50000 then
+return 'Nombre', descripcion, 'Precio', precio, 'Categoria', 'Medio';
+else return 'Nombre', descripcion, 'Precio', precio, 'Categoria', 'Caro'
+
+                    FETCH NEXT FROM subtotal INTO @stock, @precio;
+                END
+
+            END WHILE; 
+        END
+    CLOSE nombre_cursor;
+    
+    DEALLOCATE nombre_cursor;
+
+
+5-
+
+
+
+
