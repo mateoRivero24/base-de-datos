@@ -1,0 +1,23 @@
+1-
+DECLARE CURSOR primm FOR
+Select nombre from clientes
+
+DECLARE @nombre varchar(90);
+
+OPEN primm
+
+FETCH NEXT FROM primm INTO @nombre;
+Begin
+DECLARE CONTINUE HANDLER FOR NOT FOUND loop Boolean = false;
+WHILE loop
+BEGIN
+DECLARE primm varchar(90);
+update Clientes(nombre) values ();
+ FETCH NEXT FROM primm INTO @stock, @precio;
+                END
+
+            END WHILE; 
+        END
+    CLOSE primm;
+    
+    DEALLOCATE primm;
