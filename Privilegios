@@ -1,1 +1,46 @@
+1-
+use database practica_3;
+Create user 'TTT'@'LocalHost'
+identify by 'Sammy'
+
+GRANT select, delete 
+on provincias, ciudades, usuario.nombre, usuario.apellido
+to TTT;
+
+Create view nombre_cliente as select nombre, apellido from clientes;
+
+2-
+use database practica_3;
+Create user 'TTT'@'LocalHost'
+identify by 'Sammy'
+
+GRANT select, delete, insert, update, alter 
+on productos.stock, productos.precios
+to TTT;
+CREATE TRIGGER
+BEFORE DELETE ON stock
+FOR EACH ROW
+BEGIN
+if (stock > 0) then
+Raise exeption 'No se puede eliminar productos con stock';
+else return '✔';
+end if;
+END;
+Delimiter;
+
+3-
+GRANT ALL PRIVILEGES
+on compras.cliente, compras.producto, cliente.id, cliente.nmombre, cliente.apellido
+to TTT
+
+4-
+REVOKE delete 
+on *
+to usuario2;
+
+
+
+5-
+
+
 
