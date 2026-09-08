@@ -4,10 +4,10 @@ Create user 'TTT'@'LocalHost'
 identify by 'Sammy'
 
 GRANT select, delete 
-on provincias, ciudades, usuario.nombre, usuario.apellido
+on provincias, ciudades, nombre_cliente
 to TTT;
 
-Create view nombre_cliente as select nombre, apellido from clientes;
+Create view nombre_cliente as select id, nombre, apellido from clientes;
 
 2-
 use database practica_3;
@@ -62,7 +62,7 @@ CREATE TRIGGER
 BEFORE UPDATE ON productos 
 FOR EACH ROW
 BEGIN
-insert into Auditoria vavlues(now,'productos');
+insert into Auditoria values(now(),'productos');
 END;
 Delimiter;
 
@@ -70,7 +70,7 @@ CREATE TRIGGER
 BEFORE UPDATE ON  provincias
 FOR EACH ROW
 BEGIN
-insert into Auditoria vavlues(now,'provincias');
+insert into Auditoria values(now(),'provincias');
 END;
 Delimiter;
 
@@ -78,7 +78,7 @@ CREATE TRIGGER
 BEFORE UPDATE ON compras
 FOR EACH ROW
 BEGIN
-insert into Auditoria vavlues(now,'compras');
+insert into Auditoria values(now(),'compras');
 END;
 Delimiter;
 
