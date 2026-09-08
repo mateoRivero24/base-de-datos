@@ -73,6 +73,7 @@ BEGIN
 insert into Auditoria vavlues(now,'provincias');
 END;
 Delimiter;
+
 CREATE TRIGGER
 BEFORE UPDATE ON compras
 FOR EACH ROW
