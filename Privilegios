@@ -29,18 +29,56 @@ END;
 Delimiter;
 
 3-
+use database practica_3;
+Create user 'TTT'@'LocalHost'
+identify by 'Sammy'
+
 GRANT ALL PRIVILEGES
 on compras.cliente, compras.producto, cliente.id, cliente.nmombre, cliente.apellido
 to TTT
 
 4-
-REVOKE delete 
+use database practica_3;
+
+Create user 'usuario2'@'LocalHost'
+identify by 'Sammy'
+
+GRANT select, delete 
 on *
 to usuario2;
+
+REVOKE delete 
+on *
+from usuario2;
 
 
 
 5-
 
+Create view  Auditoria as Fecha, tabla;
+
+6-
+CREATE TRIGGER
+BEFORE UPDATE ON productos 
+FOR EACH ROW
+BEGIN
+insert into Auditoria vavlues(now,'productos');
+END;
+Delimiter;
+
+CREATE TRIGGER
+BEFORE UPDATE ON  provincias
+FOR EACH ROW
+BEGIN
+insert into Auditoria vavlues(now,'provincias');
+END;
+Delimiter;
+CREATE TRIGGER
+BEFORE UPDATE ON compras
+FOR EACH ROW
+BEGIN
+insert into Auditoria vavlues(now,'compras');
+END;
+Delimiter;
 
 
