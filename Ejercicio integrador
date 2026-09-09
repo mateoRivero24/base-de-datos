@@ -1,0 +1,11 @@
+1-
+Create user 'Admin'@'Localhost'
+identified by 'TRIPLET'
+
+GRANT select, update 
+on autores, generos, libros
+to 'Admin'
+
+GRANT insert, delete
+on 
+to 'Admin'
