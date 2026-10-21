@@ -1,0 +1,5 @@
+1- db.movies.find({aniop: 1914})
+
+6 -db.movies.find({Duracion: $gte 120 })
+
+11- db.movies.find({ 
