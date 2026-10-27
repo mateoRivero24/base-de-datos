@@ -18,4 +18,10 @@
 
 11- db.movies.find({ 
 
-12- 
+12- db.movies.find({imbd.rating: %lte 4})
+
+13- db.movies.find({genere: Comedy }, {imbd.rating: %lte 4} )
+
+14- db.movies.find({genres: {$in: ["Action", "Drama"]}})
+
+15-
