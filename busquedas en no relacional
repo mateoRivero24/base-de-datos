@@ -4,7 +4,7 @@
 
 4- db.movies.find({lenguages: English})
 
-5- vdb.movies.find({countries: USA})
+5- db.movies.find({countries: USA})
 
 6 -db.movies.find({Duracion: $gte 120 })
 
@@ -16,7 +16,7 @@
 
 10-db.movies.find({Duracion: $lte 90 })
 
-11- db.movies.find({ 
+11- db.movies.find({year: $lte 1932 })
 
 12- db.movies.find({imbd.rating: %lte 4})
 
@@ -24,4 +24,18 @@
 
 14- db.movies.find({genres: {$in: ["Action", "Drama"]}})
 
-15-
+15- db.movies.find({year: $in [2000, 2010, 2020]})
+
+16- db.movies.find({countries: {$in: ["UK", "USA"]}})
+
+17- db.movies.find({lenguages: $ne English})
+
+18- db.movies.find({countries: $ne USA})
+
+19- db.movies.find({directors: $ne {$in: ["Louis J. Gasnier", "Donald MacKenzie"]}})
+
+20- db.movies.find({cast: Pearl White)
+
+21- db.movies.find({directors: Louis J. Gasnier)
+
+22- 
