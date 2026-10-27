@@ -1,5 +1,21 @@
-1- db.movies.find({aniop: 1914})
+1- db.movies.find({year: 1914})
+
+2- db.movvies.find({runtime: 199})
+
+4- db.movies.find({lenguages: English})
+
+5- vdb.movies.find({countries: USA})
 
 6 -db.movies.find({Duracion: $gte 120 })
 
+7- db.movies.find({year: $gte 2020})
+
+8-db.movies.find({imbd.rating: %gte 4})
+
+9- db.movies.find({year: %gte 2010},  { title: 1, year: 1 })
+
+10-db.movies.find({Duracion: $lte 90 })
+
 11- db.movies.find({ 
+
+12- 
