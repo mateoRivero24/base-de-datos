@@ -36,6 +36,30 @@
 
 20- db.movies.find({cast: Pearl White)
 
-21- db.movies.find({directors: Louis J. Gasnier)
+21- db.movies.find({directors: Louis J. Gasnier)}
 
-22- 
+22- db.movies.find({title: {$regex: "love" }}) 
+
+23- db.movies.find({title: {$regex: "^The" }})
+
+24-  db.movies.find({fullplot: {$regex: "money" }}) 
+
+25- db.movies.find({title: {$regex: "$man" }, title: 1, genere: 1, year: 1, directors: 1}) 
+
+26- db.movies.find({directors: {$regex:  "^Louis"})} 
+
+27- db.movies.find({directors: {$regex: "$javier el alfarero" }, title: 1, year: 1}) 
+
+28- db.movies.find{year: {$lte : 1950}, runtime: {$gte: 120}}
+
+29- db.movies.find({year: {$lte : 1950}, genres: "Action"} }
+
+30- db.movies.find{"imdb.rating": {$gt : 7}, runtime: {$lte: 120}
+
+31- db.movies.find{countries: "USA", languages: "English"}
+
+32- db.movies.find{$or:[  {genres:"Action"}, {genres:"Comedy"}, title: 1, generes: 1]}
+
+33- db.movies.find{$or: [{ runtime: 180 }, { "imdb.rating": {$gte: 8 }}  ]}
+
+34-
