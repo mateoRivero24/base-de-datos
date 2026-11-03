@@ -6,7 +6,7 @@
 
 5- db.movies.find({countries: USA})
 
-6 -db.movies.find({Duracion: $gte 120 })
+6 -db.movies.find({Duracion: $gt 120 })
 
 7- db.movies.find({year: $gte 2020})
 
