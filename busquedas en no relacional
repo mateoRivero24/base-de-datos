@@ -88,4 +88,4 @@
 
 46- db.movies.find({$or: [  { directors: "Louis J. Gasnier" }, { directors: "Donald MacKenzie" } ], title: 1,year: 1,directors: 1 }).sort({year: 1})
 
-47- db.movies.find({year: {gt: 1990}, genres: {$in: ["Action", "Drama"]}, runtime: {$gt: 100}, "imdb.rating": {$gt: 7}, title: 1, year: 1,runtime: 1, "imdb.rating" :1}).sort({ "imdb.rating": 1 }).limit(10)
+47- db.movies.find({year: {$gt: 1990}, genres: {$in: ["Action", "Drama"]}, runtime: {$gt: 100}, "imdb.rating": {$gt: 7}, title: 1, year: 1,runtime: 1, "imdb.rating" :1}).sort({ "imdb.rating": 1 }).limit(10)
