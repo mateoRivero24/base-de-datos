@@ -62,4 +62,20 @@
 
 33- db.movies.find{$or: [{ runtime: 180 }, { "imdb.rating": {$gte: 8 }}  ]}
 
-34-
+34- db.movies.find().sort({year: 1})
+
+35- db.movies.find().sort({year: -1})
+
+36- db.movies.find().sort({runtime: 1})
+
+37- db.movies.find().sort({"imdb.rating": -1})
+
+38- db.movies.find().sort({title: 1})
+
+39- db.movies.find().sort({"imdb.rating": 1}).limit(5)
+
+40- db.movies.find().sort({year: -1}).limit(10)
+
+41- db.movies.find().sort({runtime: -1}).limit(5)
+
+42-
