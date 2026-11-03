@@ -50,9 +50,9 @@
 
 27- db.movies.find({directors: {$regex: "$javier el alfarero" }, title: 1, year: 1}) 
 
-28- db.movies.find{year: {$lte : 1950}, runtime: {$gte: 120}}
+28- db.movies.find{year: {$gt : 2000}, runtime: {$gte: 120}}
 
-29- db.movies.find({year: {$lte : 1950}, genres: "Action"} }
+29- db.movies.find({year: {$lt : 1950}, genres: "Action"} }
 
 30- db.movies.find{"imdb.rating": {$gt : 7}, runtime: {$lte: 120}
 
