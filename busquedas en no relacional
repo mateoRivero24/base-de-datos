@@ -78,4 +78,14 @@
 
 41- db.movies.find().sort({runtime: -1}).limit(5)
 
-42-
+42- db.movies.find().sort({year: 1}).limit(3)
+
+43- db.movies.find(generes: "Action").sort({year: -1}).limit(10)
+
+44- db.movies.find{ title: {$regex: "the", $options: "i"}, year: {$gt: 2000}}
+
+45- db.movies.find({runtime : {$lt: 120}).sort({"imdb.rating": -1})
+
+46- db.movies.find({$or: [  { directors: "Louis J. Gasnier" }, { directors: "Donald MacKenzie" } ], title: 1,year: 1,directors: 1 }).sort({year: 1})
+
+47
